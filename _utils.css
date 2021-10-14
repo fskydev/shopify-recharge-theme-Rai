@@ -173,7 +173,7 @@
 
 /* DISPLAY */
 #recharge-novum .d-none {
-  display: none !important;
+  /* display: none !important; */
 }
 
 /* STACK */

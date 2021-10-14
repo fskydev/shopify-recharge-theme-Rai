@@ -44,4 +44,23 @@
             parentEl.dataset.arrow = "down";
         }
     }
+
+	/* nav menu start */
+	var sideMenuEls = document.getElementsByClassName("side-menu-value");
+		if(sideMenuEls.length > 0) {
+		console.log(sideMenuEls);
+		var sideMenu = sideMenuEls[0].dataset.sideMenu;          	
+	  	var sideMenuEl = document.getElementById(sideMenu);
+        /*          
+        console.log(" -------- sideMenu => ", sideMenu);
+        console.log(" -------- sideMenuEl => ", sideMenuEl);
+  		*/
+	  	if(sideMenuEl != null){
+	      
+          sideMenuEl.classList.add("title-bold");
+          sideMenuEl.parentNode.classList.add("menu-nav-active");
+          
+	    }
+	}
+	/* nav menu start */
 })();
