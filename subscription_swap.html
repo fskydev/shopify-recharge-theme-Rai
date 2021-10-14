@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Swap product</h3>
+
+    {% if not product %}
+        <p>No product data found.</p>
+        <br>
+        <p>
+            <a href="{{ subscription.id | subscription_swap_search_url }}">Go back</a>
+        </p>
+    {% else %}
+        <h4>Current product</h4>
+
+        {% set subscription_shopify_details = subscription.product.shopify_details %}
+
+        <div class="grid grid--uniform grid--view-items">
+            <div class="grid__item grid__item--collections medium-up--one-quarter">
+                <div class="grid-view-item">
+                    <div class="grid-view-item__image-wrapper">
+                        {% if subscription_shopify_details.image %}
+                            <img src="{{ subscription_shopify_details.image['src'] }}" class="grid-view-item__image">
+                        {% else %}
+                            <img src="https://rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" class="grid-view-item__image">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="grid__item grid__item--collections medium-up--three-quarters">
+                <div class="grid-view-item">
+                    <h5>{{ subscription_shopify_details.title }}</h5>
+                    {{ subscription.quantity }} every {{ subscription.order_interval_frequency }}
+                    {% if subscription.order_interval_frequency and subscription.order_interval_frequency | int > 1 %}
+                        {{ subscription.order_interval_unit | title + 's' }}<br>
+                    {% else %}
+                        {{ subscription.order_interval_unit | title }}<br>
+                    {% endif %}
+                    {{ subscription.price | money }}
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h4>Select product to swap</h4>
+
+        <div class="grid">
+            <div class="grid__item medium-up--one-third">
+                {% if product.shopify_details.image %}
+                    <img src="{{ product.shopify_details.image['src'] }}" class="grid-view-item__image">
+                {% else %}
+                    <img src="https://rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" class="grid-view-item__image">
+                {% endif %}
+            </div>
+            <div class="grid__item medium-up--two-thirds">
+                <h2 class="h3 grid-view-item__title">{{ product.title }}</h2>
+                <h4 id="ProductPrice" class="product-price__price" data-property="price">
+                    {{ product.shopify_details.variants[0].price | money }}
+                </h4>
+                <form action="{{ subscription.id | subscription_swap_url }}" id="ReChargeForm_subscriptionNew" method="post">
+                    <input type="hidden" name="redirect_url" value="{{ subscription_list_url }}">
+                    <fieldset>
+                        <select name="shopify_variant_id" id="shopify_variant_id" style="display: none;">
+                            {% for variant in product.shopify_details.variants %}
+                                <option value="{{ variant.shopify_id }}"{{ ' selected' if loop.first else '' }}>
+                                    {{ variant.title }} - {{ variant.price }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        <div id="product_options_container"></div>
+
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" placeholder="1" min="1" value="{{ subscription.quantity }}" id="quantity" >
+
+                        <div id="product_schedule_container">
+                            <label>Delivery schedule</label>
+                            {% if product.subscription_defaults %}
+                                <select name="charge_interval_frequency" id="charge_interval_frequency" onchange="document.querySelector('[name=order_interval_frequency]').value=this.value">
+                                    {% for frequency in product.subscription_defaults.order_interval_frequency_options %}
+                                        <option value="{{ frequency }}" {% if frequency == product.subscription_defaults.order_interval_frequency or frequency == product.subscription_defaults.charge_interval_frequency %}selected{% endif %}>{{ frequency }} {{ product.subscription_defaults.order_interval_unit | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="hidden" name="order_interval_unit" value="{{ product.subscription_defaults.order_interval_unit }}">
+                                <input type="hidden" name="order_interval_frequency" value="{{ product.subscription_defaults.order_interval_frequency or product.subscription_defaults.charge_interval_frequency }}">
+                            {% else %}
+                                {% set frequency = subscription.order_interval_frequency or subscription.charge_interval_frequency %}
+                                {{ frequency }} {{ subscription.order_interval_unit }}
+                                <input type="hidden" name="charge_interval_frequency" id="charge_interval_frequency" value="{{ frequency }}">
+                                <input type="hidden" name="order_interval_unit" value="{{ subscription.order_interval_unit }}">
+                                <input type="hidden" name="order_interval_frequency" value="{{ frequency }}">
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <br>
+                    <p>
+                        <button type="submit" class="btn">Swap product</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            (function() {
+                var product = {{ product.shopify_details | json }},
+                    changeEvent = document.createEvent('HTMLEvents');
+
+                changeEvent.initEvent('change', true, false);
+
+                function buildOptionGroups() {
+                    return product.options.map(function(option) {
+                        return [
+                            '<div class="rc_form__group form__control input-row form-group input-wrapper">',
+                                '<label for="' + option.id + '" class="rc_form__label form__label">' + option.name + '</label>',
+                                '<select id="' + option.id + '" class="rc_option_selectors rc_form__input form__input form-control input-field input-full" onchange="optionChangeCallback(this);">',
+                                    option.values.map(function(value) {
+                                        return '<option value="' + value + '">' + value + '</option>';
+                                    }),
+                                '</select>',
+                            '</div>'
+                        ].join('')
+                    }).join('');
+                }
+
+                function updateProduct(variant) {
+                    // Selects the new variant option
+                    document.querySelector('[name="shopify_variant_id"]').value = variant.shopify_id;
+
+                    // Updates the current product element
+                    document.querySelectorAll('[data-property="price"]').forEach(function(elem) {
+                        elem.innerHTML = variant.price;
+                    });
+                }
+
+                function optionChangeCallback(evt) {
+                    // Join segmented product options to determine the actual product and update
+                    var joinedVariantTitle = Array.prototype.map.call(document.querySelectorAll('.rc_option_selectors'), function(select) {
+                            return select.value;
+                        }).join(' / ');
+
+                    // Find the matching variant object by title
+                    var newVariant = Array.prototype.filter.call(product.variants, function(variant) {
+                        return variant.title === joinedVariantTitle;
+                    })[0];
+
+                    // Perform front-end element updates
+                    updateProduct(newVariant);
+                }
+                document.querySelector('#product_options_container').innerHTML = buildOptionGroups();
+            })()
+        </script>
+    {% endif %}
+{% endblock %}

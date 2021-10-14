@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="ShippingPage" class="shipping-page">
+  <h3 class="rc-heading d-flex justify-space-between align-items-center">
+    Shipping
+    <button class="add-shipping-info rc-btn rc-btn--primary d-none">Add new Shipping Info</button>
+  </h3>
+</div>
+
+<script>
+  {% include '_card_logo.js' %}
+  {% include '_shipping.js' %}
+</script>
+{% endblock %}

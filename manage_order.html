@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <p>Your next order:</p>
+    {% if charge %}
+        <p>Order date: {{ charge.scheduled_at }}</p>
+        <p>Charge Id: {{ charge.id }}</p>
+    {% else %}
+        <p>order empty</p>
+    {% endif %}
+{% endblock %}

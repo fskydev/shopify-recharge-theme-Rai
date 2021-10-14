@@ -1,0 +1,61 @@
+<form action="" method="post" id="ReChargeForm_customer">
+  <div class="rc_input_container">
+    <p class="text-font-14">
+      <label for="first_name"> {{ 'First_Name' | t }} </label>
+      <input class="margin-top-8" type="text" name="billing_first_name" id="first_name" value="" required>
+    </p>
+    <p class="text-font-14">
+      <label for="first_name"> {{ 'Last_Name' | t }} </label>
+      <input class="margin-top-8" type="text" name="billing_last_name" id="last_name" value="" required>
+    </p>
+  </div>
+
+  <p class="text-font-14">
+    <label for="address1"> {{ 'Address' | t }} </label>
+    <input class="margin-top-8" type="text" name="billing_address1" id="address1" value="" required>
+  </p>
+
+  <p class="text-font-14">
+    <label for="address2"> {{ 'address_line' | t }} </label>
+    <input class="margin-top-8" type="text" name="billing_address2" id="address2" value="">
+  </p>
+
+  <p class="text-font-14">
+    <label for="company"> {{ 'Company' | t }} </label>
+    <input class="margin-top-8" type="text" name="billing_company" id="company" value="">
+  </p>
+
+  <p class="text-font-14">
+    <label for="country"> {{ 'Country' | t }} </label>
+    <select class="margin-top-8" name="billing_country" id="country" data-value="" onchange="ReCharge.Forms.updateProvinces(this); ReCharge.Novum.Utils.getZipLabel(this.value);" required>
+    </select>
+  </p>
+
+   <p class="text-font-14">
+    <label for="city"> {{ 'City' | t }} </label>
+    <input class="margin-top-8" type="text" name="billing_city" id="city" value="" required>
+  </p>
+
+  <p class="text-font-14">
+    <label for="province" class="js-statelabel"> {{ 'Province_State' | t }} </label>
+    <input type="text" name="billing_province" id="province" value="">
+    <select class="margin-top-8" id="province_selector" onchange="ReCharge.Forms.updateProvinceInput(this);" style="display: none;"></select>
+  </p>
+
+  <p class="text-font-14">
+    <label for="zip" class="js-zipcode"> {{ 'Postal_Code' | t }} </label>
+    <input class="margin-top-8" type="text" name="billing_zip" id="zip" value="" required>
+  </p>
+
+  <p class="text-font-14">
+    <label for="email"> {{ 'Email' | t }} </label>
+    <input class="margin-top-8" type="text" name="email" id="email" value="{{ customer.email }}">
+  </p>
+
+  <p class="text-font-14">
+    <label for="phone"> {{ 'Phone' | t }} </label>
+    <input class="margin-top-8" type="number" name="billing_phone" id="phone" value="">
+  </p>
+
+  <button type="submit"class="rc_btn text-uppercase billing-btn title-bold"> {{ 'cp_update_button' | t }} </button>
+</form>

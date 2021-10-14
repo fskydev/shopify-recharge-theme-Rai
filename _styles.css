@@ -1,0 +1,1471 @@
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* Colors */
+body#recharge-novum {
+  --preview-primary: #ffffff;
+  --primary-background: #f8f8f8;
+  --secondary-background: #f0f0f0;
+  --button-primary: #252525;
+  --button-secondary: #252525;
+  --input-color: #252525;
+}
+
+/* Spacing */
+body#recharge-novum {
+  --rc-spacing-1: 4;
+  --rc-spacing-2: 8;
+  --rc-spacing-3: 12;
+  --rc-spacing-4: 16;
+  --rc-spacing-5: 20;
+  --rc-spacing-6: 24;
+}
+
+body#recharge-novum {
+  --primary-color: var(--button-primary);
+  --color-white: var(--preview-primary);
+  --color-black: #000000;
+  --color-green: var(--input-color);
+  --color-red: #e63235;
+  --color-dark-red: #e63235;
+  --color-transparent: #00000000;
+  --color-light-green: var(--button-primary);
+  --color-dark-green: var(--button-secondary);
+  --color-light-blue: var(--secondary-background);
+  --color-thin-blue: var(--secondary-background);
+  --color-turquoise-blue: #09919E;
+  --color-gray: #808f99;
+  --color-success-toast: var(--input-color);
+  --background-color: var(--primary-background);
+  --background-green: var(--button-primary);
+  --color-subscription-expired: #c0c0c0;
+  --border-color: var(--secondary-background);
+  --info-modal-color-dark: #424242;
+  --info-modal-color-light-gray: #B6B6BD;
+  --color-orange: #f1833b;
+  --info-modal-color-blue: #317d94;
+}
+
+/* Fonts */
+body#recharge-novum {
+  --recharge-te-primary-font: Roboto, sans-serif; 
+  --recharge-te-secondary-font: Merriweather, sans-serif; 
+}
+
+body#recharge-novum #recharge-te * {
+  margin: 0px;
+  padding: 0px;
+  font-family: var(--recharge-te-primary-font);
+  list-style-type: none;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body#recharge-novum #recharge-te {
+  position: relative;
+  z-index: 100000;
+}
+
+body#recharge-novum {
+  color: var(--primary-color);
+  z-index: 2;
+}
+
+body#recharge-novum header, body body#recharge-novum .site-header {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+body#recharge-novum footer, body#recharge-novum .site-footer {
+  margin-top: 0px !important;
+}
+
+body#recharge-novum #recharge-te {
+  font-family: var(--recharge-te-primary-font);
+  background: var(--background-color);
+  color: var(--color-green);
+  padding-bottom: 55px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper p,
+body#recharge-novum #recharge-te p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.47px;
+  color: var(--color-green);
+  margin: 8px 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper h6,
+body#recharge-novum #recharge-te h6 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 1.47px;
+  color: var(--color-turquoise-blue);
+  margin-bottom: 17px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper h5,
+body#recharge-novum #recharge-te h5 {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px !important;
+  line-height: 14px;
+  color: var(--color-green);
+  margin: 8px 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper h4,
+body#recharge-novum #recharge-te h4 {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 14px;
+  color: var(--color-green);
+  margin: 10px 0px;
+
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper h3,
+body#recharge-novum #recharge-te h3 {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 20px;
+  color: var(--primary-color);
+  margin-bottom: 17px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper h2,
+body#recharge-novum #recharge-te h2 {
+  text-transform: none;
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 20px;
+  color: var(--primary-color);
+  margin-bottom: 17px;
+}
+
+body#recharge-novum #recharge-te i {
+  color: #0d2d32;
+}
+
+body#recharge-novum #recharge-te ul li a, body#recharge-novum #recharge-te a {
+  text-decoration: none !important;
+  color: var(--primary-color);
+}
+
+body#recharge-novum #recharge-te input,
+body#recharge-novum #recharge-te #rc_te-template-wrapper input,
+body#recharge-novum #recharge-te select,
+body#recharge-novum #recharge-te #rc_te-template-wrapper select {
+  padding: 10px;
+  background-color: var(--color-white);
+  font-size: 12px;
+}
+
+body#recharge-novum #recharge-te select,
+body#recharge-novum #recharge-te #rc_te-template-wrapper select {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--color-light-blue);
+  margin-bottom: 15px;
+  background-image: unset;
+  -webkit-appearance: menulist;
+  appearance: menulist;
+}
+
+body#recharge-novum #recharge-te .rc_purchase_type {
+  padding: 0px;
+  background-color: var(--color-white);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te .rc_purchase_type label,
+body#recharge-novum #recharge-te .rc_delivery_options label {
+  padding: 14px 10px 14px 0px;
+  flex-basis: 90%;
+}
+
+body#recharge-novum #recharge-te .rc_purchase_type input,
+body#recharge-novum #recharge-te .rc_delivery_options input {
+  flex-basis: 10%;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper select,
+body#recharge-novum #recharge-te select {
+  height: 42px;
+  margin-bottom: 15px;
+}
+
+button,
+input[type="submit"],
+label[for] {
+  cursor: pointer;
+}
+
+input:focus, button:focus {
+  outline: none;
+  border: none;
+}
+
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+a,
+button,
+[role="button"],
+input,
+label,
+select,
+textarea {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+   color: var(--primary-color);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper ul,
+body#recharge-novum #recharge-te ul {
+  list-style-type: none !important;
+  margin-left: 0px;
+}
+
+body#recharge-novum .rc_form {
+  width: 100%;
+}
+
+body#recharge-novum label {
+  margin-bottom: 5px;
+}
+
+body#recharge-novum input:checked+label {
+  border: none;
+}
+
+body#recharge-novum ul.rc_toaster {
+  position: fixed;
+  max-width: 85%;
+  color: var(--color-white);
+  bottom: 27px;
+  margin: 0;
+  padding: 0;
+  right: 27px;
+  z-index: 100000000000000 !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: height 1s;
+  transition: height 1s;
+}
+
+body#recharge-novum li.rc_toast {
+  width: 100%;
+  padding: 12px 15px;
+  background: #AAA;
+  color: var(--color-white);
+  margin: 10px 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-animation: popup 0.6s cubic-bezier(0.1, 1.06, 0.6, 1.34), hide 0.4s 3s;
+  animation: popup 0.6s cubic-bezier(0.1, 1.06, 0.6, 1.34), hide 0.4s 3s;
+}
+
+body#recharge-novum li.rc_toast p,
+body#recharge-novum li.rc_toast p:before,
+body#recharge-novum li.rc_toast span:before {
+  display: inline-block;
+}
+
+body#recharge-novum li.rc_toast p:before {
+  content: "\2014";
+  margin: 0 6px;
+}
+
+body#recharge-novum li.rc_toast p {
+  color: var(--color-white);
+  margin: 0;
+  padding: 0;
+}
+
+body#recharge-novum span.rc_toast__type:before,
+body#recharge-novum span.rc_toast__button:before {
+  font-family: fontawesome;
+  margin-right: 6px;
+}
+
+body#recharge-novum span.rc_toast__button:before {
+  content: "\f00d";
+  margin: 0 0 0 30px;
+}
+
+body#recharge-novum li.rc_toast.rc_toast--error {
+  background-color: var(--color-dark-red);
+}
+
+body#recharge-novum #recharge-te .error-message,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .error-message {
+  color: var(--color-dark-red);
+  font-size: 11px;
+  margin-top: 0;
+}
+
+body#recharge-novum li.rc_toast.rc_toast--error span.rc_toast__type:before {
+  content: "\f071";
+}
+
+body#recharge-novum li.rc_toast.rc_toast--success {
+  background-color: var(--color-success-toast);
+  bottom: 95px;
+}
+
+body#recharge-novum li.rc_toast.rc_toast--success span.rc_toast__type:before {
+  content: "\f00c";
+}
+
+body#recharge-novum li.rc_toast.rc_toast--warning {
+  background-color: #fb8309;
+}
+
+body#recharge-novum li.rc_toast.rc_toast--warning span.rc_toast__type:before {
+  content: "\f071";
+}
+
+@media screen and (min-width: 768px) {
+  .rc_toast {
+    white-space: nowrap;
+  }
+}
+
+@-webkit-keyframes popup {
+  from {
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes popup {
+  from {
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes hide {
+  from {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/*=============
+Custom styles
+=============*/
+
+/* general styles begin */
+@media (min-width: 750px){
+  .page-container {
+    transform: none;
+  }
+}
+
+body#recharge-novum #recharge-te .rc_page-width {
+  padding-left: 55px;
+  padding-right: 55px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+body#recharge-novum #recharge-te .border-light,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .border-light {
+  border-radius: 5px;
+  border: 1px solid var(--color-light-blue);
+}
+
+body#recharge-novum #recharge-te .text-uppercase,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .text-uppercase {
+  text-transform: uppercase;
+}
+
+body#recharge-novum #recharge-te .title-bold,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .title-bold {
+  font-weight: 600 !important;
+}
+
+body#recharge-novum #recharge-te .font-normal,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .font-normal {
+  font-size: normal !important;
+}
+
+body#recharge-novum #recharge-te .primary-font-size,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .primary-font-size {
+  font-size: 12px !important;
+}
+
+body#recharge-novum #recharge-te .letter-spacing,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .letter-spacing {
+  letter-spacing: 1.47px;
+}
+
+body#recharge-novum #recharge-te .width-100,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .width-100 {
+  width: 100%;
+}
+
+body#recharge-novum #recharge-te .text-font-14,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .text-font-14 {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  text-transform: initial !important;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_card_container,
+body#recharge-novum #recharge-te .rc_card_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_discount_container .rc_card_title,
+body#recharge-novum #recharge-te .rc_discount_container .rc_card_title {
+  margin-bottom: 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_discount,
+body#recharge-novum #recharge-te .rc_discount {
+  display: flex;
+  justify-content: space-between;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .text-center,
+body#recharge-novum #recharge-te .text-center {
+  text-align: center;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .align-self-center,
+body#recharge-novum #recharge-te .align-self-center {
+  align-self: center;
+}
+
+body#recharge-novum #recharge-te .margin-top-8 {
+  margin-top: 8px;
+}
+
+body#recharge-novum #recharge-te .margin-top-10 {
+  margin-top: 10px;
+}
+
+body#recharge-novum #recharge-te .margin-left-10 {
+  margin-left: 10px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .padding-t-l-b {
+  padding-top: 10px;
+  padding-left: 18px;
+  padding-bottom: 10px;
+}
+
+body#recharge-novum #recharge-te .color-dark-green,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-dark-green {
+  color: var(--color-dark-green);
+}
+
+body#recharge-novum #recharge-te .color-light-green,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-light-green {
+  color: var(--color-light-green);
+}
+
+body#recharge-novum #recharge-te .color-dark-red,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-dark-red {
+  color: var(--color-dark-red);
+}
+
+body#recharge-novum #recharge-te .color-gray,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-gray {
+  color: var(--color-gray);
+}
+
+body#recharge-novum #recharge-te .color-turquoise-blue,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-turquoise-blue {
+  color: var(--color-turquoise-blue);
+}
+
+body#recharge-novum #recharge-te .color-orange,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .color-orange {
+  color: var(--color-orange);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_input_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_input_container div,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_input_container p,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_input_container select {
+   flex-basis: 48%;
+}
+
+body#recharge-novum #recharge-te #te-modal-content .textarea-size {
+  width: 100%;
+  min-height: 100px;
+}
+
+body#recharge-novum #recharge-te #te-modal-content input[type = text] {
+  height: 42px;
+}
+
+body#recharge-novum #recharge-te .rc_product_list_container .product-title {
+  height: 29px;
+  font-family: var(--recharge-te-secondary-font);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+body#recharge-novum #recharge-te .rc_product_list_container .vertical-divider {
+  margin: 0px 5px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #js-rc_schedule_container .scheduled-order {
+  margin-bottom: 20px;
+  background: var(--color-white);
+  border-radius: 5px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #js-rc_schedule_container .order-divider {
+  border: 1px solid var(--color-light-blue);
+  margin: 0px 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_container {
+  margin-bottom: 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_wrapper .expired-icon,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .expired-icon {
+  background: var(--color-light-blue);
+  color: var(--color-dark-green);
+  border-radius: 15px;
+  padding: 4px 12px;
+  text-transform: uppercase;
+  margin: 5px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+}
+
+body#recharge-novum #recharge-te #te-modal-content .subscription-order-divider {
+  border: 1px solid var(--color-light-blue);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container .upsell-btn-mobile {
+  background: var(--color-white);
+  border: 1px solid var(--primary-color);
+}
+
+body#recharge-novum #recharge-te #te-modal-content .display-flex,
+body#recharge-novum #recharge-te #te-card-modal-content .display-flex {
+  display: flex;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc-card .font-spacing {
+  letter-spacing: 0.09em;
+}
+
+/* general styles end */
+
+/* Header styles for hosted portal begin */
+{% if settings.customer_portal.hosted_customer_portal %}
+    body#recharge-novum #recharge-te .rc_theme__header {
+        height: 72px;
+        background-color: var(--color-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    body#recharge-novum #recharge-te .rc_theme__header #novum-logo {
+        margin-bottom: 0;
+        font-size: 33px;
+    }
+
+    #rc_account_link,
+    #rc_account_logout {
+        position: absolute;
+        font-size: 12px;
+        line-height: 12px;
+        cursor: pointer;
+    }
+
+    #rc_account_link {
+        left: 2em;
+    }
+
+    #rc_account_logout {
+        right: 2em;
+    }
+
+    body #recharge-te .rc_theme__header #rc-main-logo-link img {
+        max-height: 50px;
+        max-width: 300px;
+    }
+
+    @media screen and (max-width: 650px) {
+        body#recharge-novum #recharge-te .rc_theme__header {
+            height: 80px;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        #rc_account_link {
+            position: initial;
+        }
+
+        #rc-main-logo-link {
+            margin-bottom: 16px !important;
+        }
+    }
+{% endif %}
+
+/* Header styles end */
+
+/* Navbar styles begin */
+body#recharge-novum #recharge-te .nav--wrapper {
+  padding: 10px 0px;
+  margin-bottom: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.arrow--hide {
+  display: none;
+}
+
+body#recharge-novum #recharge-te .bg-light {
+  background: var(--color-light-blue);
+}
+
+body#recharge-novum #recharge-te .nav--wrapper--margin {
+  margin-bottom: 0px;
+}
+
+body#recharge-novum #recharge-te .nav__list--desktop {
+  max-width: 1200px;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  list-style-type: none !important;
+}
+
+body#recharge-novum #recharge-te .nav__list--desktop:last-child::after {
+  content: none;
+}
+
+body#recharge-novum #recharge-te .list_item_chosen {
+  display: none;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+body#recharge-novum #recharge-te .menu--active {
+  display: block !important;
+}
+
+body#recharge-novum #recharge-te .nav__list--mobile {
+  display: none;
+  margin-bottom: 30px;
+  list-style-type: none !important;
+}
+
+body#recharge-novum #recharge-te .nav__list--mobile li {
+  padding: 10px;
+  border-top: 1px solid var(--color-white);
+  background: var(--background-green);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+body#recharge-novum #recharge-te .nav__list--mobile li a,
+body#recharge-novum #recharge-te .nav__list--mobile li a:hover {
+  color: var(--color-white) !important;
+}
+
+@media (max-width: 650px) {
+  body#recharge-novum #recharge-te .nav__list--desktop {
+    display: none;
+  }
+  body#recharge-novum #recharge-te .list_item_chosen {
+    display: block;
+  }
+}
+
+/* Navbar styles end */
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_card_element_wrapper {
+  background: var(--color-white);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 1px 2px 0px 0px rgba(217,225,227,1);
+  -moz-box-shadow: 1px 2px 0px 0px rgba(217,225,227,1);
+  box-shadow: 1px 2px 0px 0px rgba(217,225,227,1);
+}
+
+body#recharge-novum #recharge-te .element__border--top {
+  border-top: 2px solid var(--color-thin-blue);
+  padding: 16px 0 16px 0px;
+}
+
+body#recharge-novum #recharge-te .element__flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te .rc_photo_container img,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_photo_container img,
+body#recharge-novum #recharge-te .rc_image_container img,
+body#recharge-novum #recharge-te img {
+  object-fit: contain;
+  max-height: 100px;
+  max-width: 100px;
+  min-width: 100px;
+}
+
+/* ReCharge buttons begin */
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper button,
+body#recharge-novum #recharge-te button {
+  background-color: var(--color-transparent);
+  width: auto;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_btn,
+body#recharge-novum #recharge-te .rc_btn {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.47px;
+  text-transform: uppercase;
+  padding: 15px 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_btn--secondary,
+body#recharge-novum #recharge-te .rc_btn--secondary,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .expired {
+  display: block;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  align-self: center;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.47px;
+  text-transform: uppercase;
+  padding: 15px 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .expired:hover {
+    cursor: initial;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_btn--secondary--color:hover {
+  background: var(--primary-color) !important;
+  color: var(--color-white) !important;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_cancel-btn,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .js-add-discount-btn {
+  color: var(--background-green);
+  cursor: pointer;
+}
+/* ReCharge buttons end */
+
+body#recharge-novum #recharge-te #ReChargeForm_address input,
+body#recharge-novum #recharge-te #ReChargeForm_address select,
+body#recharge-novum #recharge-te #ReChargeForm_customer input,
+body#recharge-novum #recharge-te #ReChargeForm_customer select,
+body#recharge-novum #recharge-te #customer-card-form input,
+body#recharge-novum #recharge-te #ReChargeForm_applyDiscount input,
+body#recharge-novum #recharge-te #ReChargeForm_date input,
+body#recharge-novum #recharge-te #ReChargeForm_variant button[type=submit],
+body#recharge-novum #recharge-te #ReChargeForm_date button,
+body#recharge-novum #recharge-te #ReChargeForm_schedule button,
+body#recharge-novum #recharge-te #rc_manage_subscription_container div button,
+body#recharge-novum #recharge-te #ship__now--container button,
+body#recharge-novum #recharge-te #ReChargeForm_skip button,
+body#recharge-novum #recharge-te #rc_cancellation_reasons_list button,
+body#recharge-novum #recharge-te #te-modal-content button {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--color-light-blue);
+  margin-bottom: 15px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_loader {
+  height: 30px;
+  background-image: url(https://rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/spinner-anim-3.gif?t=1589649332);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 20px;
+}
+
+/* Subscriptions style begin */
+body#recharge-novum #recharge-te #rc_te-template-wrapper .expired {
+  border-color: var(--color-subscription-expired);
+  color: var(--color-subscription-expired);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .page-title {
+  text-align: center;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_info_container {
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_next_charge_date {
+  text-align: center;
+  padding-top: 10px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #next_charge_date_container input {
+  padding: 5px;
+}
+
+
+body#recharge-novum #recharge-te .rc_purchase_type:hover {
+  cursor: pointer;
+}
+
+/* Subscriptions style end */
+
+/* Edit subscription style begin  */
+
+body#recharge-novum #recharge-te .margin-left-5,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-left-5 {
+  margin-left: 5px;
+}
+
+body#recharge-novum #recharge-te .margin-right-5,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-right-5 {
+  margin-right: 5px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-right-20 {
+  margin-right: 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-top-15 {
+  margin-top: 15px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-top-17 {
+  margin-top: 17px;
+}
+
+body#recharge-novum #recharge-te .margin-bottom-8,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-bottom-8 {
+  margin-bottom: 8px;
+}
+
+body#recharge-novum #recharge-te .image-size,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .image-size {
+  height: 100px;
+  width: 100px;
+}
+
+body#recharge-novum #recharge-te #te-modal .upsell-text-clip,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .upsell_text--clip {
+  height: 29px;
+  text-transform: initial !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+body#recharge-novum #recharge-te #te-modal .upsell-text-center,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .upsell_text--center {
+  height: 29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body#recharge-novum #recharge-te .rc_btn,
+body#recharge-novum #recharge-te .rc_btn--secondary {
+  padding: 15px 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li button {
+  width: 100%;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_discount_container:hover {
+  cursor: default !important;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li:hover .js-card {
+  z-index: 1;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li {
+  min-height: 210px;
+  position: relative;
+  overflow: hidden;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li .rc_upsells-btns {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--primary-color) !important;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  padding: 0 var(--rc-spacing-5);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_upsells-btns input[type=button] {
+  border-radius: 5px;
+  width: 100%;
+  background: var(--primary-color);
+  color: var(--color-white);
+  width: 100%;
+  border: 1px solid var(--color-white);
+  cursor: pointer;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_upsells-btns input[type=button]:not(:last-child) {
+  margin-bottom: var(--rc-spacing-3);
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_upsells-btns input:hover {
+  background: var(--color-white) !important;
+  color: var(--primary-color) !important;
+  cursor: pointer !important;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_upsells-btns input:focus {
+  outline: none;
+}
+
+#rc_te-template-wrapper #rc_manage_subscription_container .upsells--wrapper .upsells-title {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--color-green);
+}
+
+/* Edit subscription style end  */
+
+body#recharge-novum #recharge-te #customer-card-form {
+  width: 100%;
+  height: 650px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #133a3e;
+  font-weight: normal;
+  background: var(--color-white);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* orders page styles begin */
+body#recharge-novum #recharge-te .rc_order_info_container {
+  text-align: center;
+}
+
+body#recharge-novum #recharge-te .rc_order_title_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-right-10,
+body#recharge-novum #recharge-te #info-modal .margin-right-10 {
+	margin-right: 10px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-right-20,
+body#recharge-novum #recharge-te #info-modal .margin-right-20 {
+	margin-right: 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-20-0,
+body#recharge-novum #recharge-te #info-modal .margin-20-0 {
+	margin: 20px 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-bottom-0,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_container .margin-bottom-0 {
+	margin-bottom: 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-bottom-10,
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_container .margin-bottom-10 {
+	margin-bottom: 10px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .margin-bottom-20,
+body#recharge-novum #recharge-te #te-modal-content .margin-bottom-20 {
+	margin-bottom: 20px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .line-height-12,
+body#recharge-novum #recharge-te #te-modal-content .line-height-12 {
+  line-height: 12px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper .line-height-14,
+body#recharge-novum #recharge-te #te-modal-content .line-height-14 {
+  line-height: 14px;
+}
+
+body#recharge-novum #recharge-te #te-modal-content .order-details {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--color-green);
+}
+
+body#recharge-novum #recharge-te .rc_order_title {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--color-dark-green);
+}
+
+body#recharge-novum #recharge-te .order-photo {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body#recharge-novum #recharge-te .order-number-date {
+  margin-bottom: 8px;
+}
+
+body#recharge-novum #recharge-te .order-photo img {
+  object-fit: cover;
+  height: 100%;
+  min-width: 70px;
+  border-radius: 50%;
+}
+
+/* orders page styles end */
+
+body#recharge-novum #recharge-te #search-container {
+  padding: 5px;
+}
+
+body#recharge-novum #recharge-te #search-container input {
+   width: 100%;
+   border: none;
+}
+
+body#recharge-novum #recharge-te #search-container input:focus {
+  outline: none;
+}
+
+body#recharge-novum #recharge-te .rc_product_list_container,
+body#recharge-novum #recharge-te #rc__upsells--container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  column-gap: 10px;
+  row-gap: 10px;
+  margin: 15px 0px;
+}
+
+body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container {
+    row-gap: 0px;
+}
+
+body#recharge-novum #recharge-te .rc_product_list_container li,
+body#recharge-novum #recharge-te #rc__upsells--container li {
+  padding: 10px;
+  min-height: 200px;
+}
+
+/* add product details */
+
+body#recharge-novum #recharge-te .rc_product_quantity {
+  width: 30%;
+  display: grid;
+  grid-template-rows: 42px;
+  grid-template-columns: 15px 40px 15px;
+  grid-gap: 14px;
+  text-align: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+body#recharge-novum #recharge-te .rc_product_quantity input {
+  outline: none;
+  border: none;
+  font-size: 16px;
+  padding: 0px;
+  padding-left: 8px;
+  height: 30px;
+}
+
+body#recharge-novum #recharge-te .rc_product_quantity span {
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+body#recharge-novum #recharge-te .order-date-desktop {
+  display: none;
+}
+
+/* add product details */
+body#recharge-novum #recharge-te .pagination_buttons_container,
+body#recharge-novum #recharge-te .rc__upsells--pagination_buttons_container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+body#recharge-novum #recharge-te .pagination_buttons_container li,
+body#recharge-novum #recharge-te .rc__upsells--pagination_buttons_container li {
+  margin-right: 15px;
+}
+
+/* addresses style begin */
+body#recharge-novum #recharge-te #rc_te-template-wrapper .address-info-msg {
+  font-style: italic;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.47px;
+  color: var(--color-green);
+}
+
+/* addresses style end */
+
+@media (min-width: 768px) {
+  /* subscriptions styles start */
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  body#recharge-novum #recharge-te .nav__list--mobile {
+    display: none !important;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_info_container {
+    flex-direction: row;
+    justify-content: start;
+    flex-basis: 50%;
+    text-align: inherit;
+    align-items: center;
+    padding-bottom: 0px;
+    padding-right: 15px;
+    border-bottom: none;
+    border-right: 2px solid var(--border-color);
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_next_charge_date {
+    display: flex;
+    flex-basis: 50%;
+    justify-content: space-between;
+    padding-left: 15px;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_subscription_next_charge_date div {
+    text-align: start;
+  }
+
+  /* subscriptions styles end */
+
+  /* schedule begin */
+
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_wrapper {
+    margin-left: 30px;
+  }
+
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .custom-font {
+    font-family: Roboto;
+  }
+
+  /* schedule end */
+
+  /* edit subscription styles begin */
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc_manage_subscription_container {
+	  display: flex;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc_manage_subscription_container .edit_subscription_info--wrapper {
+    margin-right: 40px;
+    flex-basis: 40%;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc_manage_subscription_container .upsells--wrapper {
+     flex-basis: 60%;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container .rc_product_card div button {
+    display: none;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .upsell-btn-mobile {
+    display: none;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li {
+    min-height: 170px;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li:hover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc__upsells--container li:hover .rc_upsells-btns {
+    display: flex;
+  }
+
+  /* edit subscription styles end */
+  body#recharge-novum #recharge-te .order-date-desktop {
+    display: block;
+  }
+  body#recharge-novum #recharge-te .rc_order_info_container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0px;
+    text-align: inherit;
+    align-items: center;
+  }
+  body#recharge-novum #recharge-te .order-date-mobile {
+    display: none;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_schedule_container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  body#recharge-novum #recharge-te .rc_order_title_container {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  body#recharge-novum #recharge-te .rc_image_container img.rc_img__sidebar {
+    width: 100%;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .page-title {
+    text-align: start;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product h3 {
+    margin-bottom: 0px;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_next_charge_date {
+    display: flex;
+    margin-left: 70px;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_next_charge_date div {
+    text-align: initial;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_next_charge_date a {
+    margin-left: 30px;
+  }
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_inactive_subscriptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* store styles fixes begin */
+/* wohven.com */
+body .logo--square {
+  position: static !important;
+}
+
+body .site-header.header-scroll {
+  position: relative !important;
+}
+
+/* freshandfrequent.com */
+
+body.cus_overflow {
+  overflow: visible;
+}
+
+/* fpvcrate.com */
+
+body#recharge-novum #main-body #shopify-section-announcement-bar.shopify-section {
+  position: relative;
+  z-index: 100000;
+}
+
+body#recharge-novum #main-body #shopify-section-header.shopify-section .header-wrapper .header-menu-wrapper .row .main-navigation-wrapper-main #main-navigation-wrapper {
+  border-color: #d1d1d1;
+  border-width: 1px 0;
+  border-style: solid;
+  z-index: 80000;
+  position: relative;
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  background: var(--color-white);
+}
+
+body#recharge-novum main#main-scrollbar {
+  opacity: 1;
+  pointer-events: all;
+}
+
+body#recharge-novum #mobile-loader {
+  display: none;
+}
+
+/* store styles fixes end */
+
+/* PAYMENT METHOD STYLES START */
+#recharge-novum .edit-shopify-payment-method-container {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+  #recharge-novum .payment-methods-page {
+    margin-left: -42px !important;
+    margin-right: -42px !important;
+  }
+}
+/* PAYMENT METHOD STYLES END */
+
+/*  SHIPPING STYLES START */
+#recharge-novum #ShippingPage .details-container {
+  padding-top: 32px !important;
+}
+
+@media screen and (max-width: 670px) {
+  #recharge-novum .shipping-page .payment-method-details {
+    margin-top: var(--rc-spacing-3) !important;
+  }
+}
+
+#recharge-novum #RechargePaymentMethodForm .payment-method-options {
+  display: flex;
+  flex-direction: column;
+}
+
+#recharge-novum .shipping-page .rc-expandable-card :is(.edit-address, .change-payment-method) {
+  transition: all 200ms ease-in-out;
+  opacity: 0;
+  display: none;
+  visibility: hidden;
+}
+
+#recharge-novum .shipping-page .rc-expandable-card:is(.in, .open) :is(.edit-address, .change-payment-method) {
+  transition: all 200ms ease-in-out;
+  display: block;
+  visibility: visible;
+}
+
+#recharge-novum .shipping-page .rc-expandable-card.open :is(.edit-address, .change-payment-method) {
+  opacity: 1;
+}
+/* SHIPPING STYLES END */
+
+#recharge-novum .card-logo {
+  width: 36px;
+  height: 24px;
+  background: rgba(8, 7, 7, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#recharge-novum .grid-250 {
+  display: grid;
+  width: 100%;
+  grid-gap: var(--rc-spacing-2);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}

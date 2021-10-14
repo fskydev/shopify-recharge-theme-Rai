@@ -1,0 +1,188 @@
+/* lock page when modal is active*/
+body.locked {
+  overflow: hidden !important;
+}
+
+body#recharge-novum #recharge-te #te-modal, 
+body#recharge-novum #recharge-te #te-card-modal {
+  width: 380px;
+  height: 100%;
+  position: fixed;
+  z-index: 100000 !important;
+  top: 0;
+  right: -466px;
+  transition: 300ms ease-in-out all;
+  background: var(--color-white);
+  box-shadow: 0px 2px 4px rgba(0,0,0, 0.1);
+}
+
+@media (max-width: 460px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper button, 
+  body#recharge-novum #recharge-te button {
+    background-color: var(--color-transparent);
+    width: 100%;
+  } 
+  
+  body#recharge-novum #recharge-te #te-modal, 
+  body#recharge-novum #recharge-te #te-card-modal {
+    width: 100%;
+  }
+  
+  body#recharge-novum #recharge-te .rc_btn {
+    width: 100%;	
+  }
+}
+
+body#recharge-novum #recharge-te #te-modal.visible, 
+body#recharge-novum #recharge-te #te-card-modal.visible {
+  right: 0;
+}
+
+body#recharge-novum #recharge-te #te-modal-heading, 
+body#recharge-novum #recharge-te #te-card-modal-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 2px solid var(--color-thin-blue);
+}
+
+body#recharge-novum #recharge-te .te-modal-title {
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+body#recharge-novum #recharge-te #te-modal-heading .close-sidebar, 
+body#recharge-novum #recharge-te #te-card-modal-heading .close-card-sidebar,
+body#recharge-novum #recharge-te #te-modal-heading .back-btn {
+  font-size: 24px;
+  color: var(--color-thin-blue);
+  cursor: pointer;
+}
+
+body#recharge-novum #recharge-te #te-modal-content, 
+body#recharge-novum #recharge-te #te-card-modal-content {
+  padding: 20px 20px 0 20px;
+  height: calc(100% - 130px);
+  overflow-y: auto;
+  position: relative;
+}
+
+body#recharge-novum #recharge-te #sidebar-underlay, 
+body#recharge-novum #recharge-te #sidebar-card-underlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  cursor: pointer;
+  display: none;
+  z-index: 1950;
+  top: 0;
+  left: 0;  
+}
+
+body#recharge-novum #recharge-te #sidebar-underlay.visible, 
+body#recharge-novum #recharge-te #sidebar-card-underlay.visible {
+  display: block;
+}
+
+/* preview link info styles */
+body#recharge-novum #recharge-te #info-modal-underlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.5);
+} 
+
+body#recharge-novum #recharge-te #info-modal {
+  max-width: 700px;
+  width: 100%;
+  background-color: var(--color-white);
+  position: fixed;
+  top: 50%;
+  z-index: 200;
+  margin: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  font-family: var(--recharge-te-primary-font);
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-header h3 {
+  margin-bottom: 0px;
+  color: var(--info-modal-color-dark);
+  font-size: 20px;
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-header span {
+  font-size: 22px;
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-close-btn {
+  color: var(--info-modal-color-light-gray);
+  cursor: pointer;
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-content {
+  padding: 16px;
+  background: #fce6ce;
+  display: flex;
+  color: var(--info-modal-color-dark);
+  margin-bottom: 16px;
+
+}
+body#recharge-novum #recharge-te #info-modal #info-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #B6B6BD;
+  padding-top: 16px;
+}
+
+body#recharge-novum #recharge-te #info-modal #info-modal-footer .rc_info-btn {
+  border-style: solid;
+  height: 36px;
+  line-height: 36px;
+  min-width: 150px;
+  padding: 0 20px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  outline: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  white-space: nowrap;
+  font-weight: 600;
+  background: var(--color-white);
+}
+
+body#recharge-novum #recharge-te #info-modal .rc_info_agree-btn {
+  background: var(--color-orange) !important;
+  border: 1px solid var(--color-orange);
+  color: var(--color-white);
+  margin-left: 10px;
+}
+
+body#recharge-novum #recharge-te #info-modal .rc_info_cancel-btn {
+  border: 1px solid var(--info-modal-color-blue);
+  color: var(--info-modal-color-blue);
+}
+
+@media only screen and (min-width: 421px) and (max-width: 767px) {
+  body#recharge-novum #recharge-te #info-modal {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
+/* preview link info styles */

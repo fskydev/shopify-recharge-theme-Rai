@@ -1,0 +1,17 @@
+<div class="rc-card mb-5 cursor-pointer rc_card_container js-address-edit" data-id="{{ address.id }}">
+    <div>
+        <p style="display: none" class="rc_shipping_address title-bold text-uppercase">
+            {{ 'shipping_address_title' | t }}
+        </p>
+        <p class="text-font-14">
+            {{ address.first_name | escape }} {{ address.last_name | escape }}
+        </p>
+        <p data-id="{{ address.id }}">
+            {{ address.address1 | escape }} {{ address.address2 | escape if address.address2 else '' }}
+        </p>
+        <p data-id="{{ address.id }}">
+            {{ address.city | escape }}, {{ address.province | escape }} {{ address.zip | escape }}
+        </p>
+    </div>
+    <i class="fas fa-chevron-right js-address-edit-btn" style="display: none;"></i>
+</div>

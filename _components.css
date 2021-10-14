@@ -1,0 +1,356 @@
+/* Includes all the component styles used within the theme */
+
+#recharge-novum .rc-heading {
+  font-family: var(--recharge-te-secondary-font);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 20px;
+  color: var(--color-black) !important;
+  margin-bottom: 24px !important;
+}
+
+#recharge-novum .rc-subheading {
+  font-family: var(--recharge-te-primary-font) !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px !important;
+  line-height: 12px !important;
+  letter-spacing: 1.47px;
+  color: var(--primary-color) !important;
+  margin-top: 0 !important;
+  margin-bottom: var(--rc-spacing-3) !important;
+}
+
+#recharge-novum .rc-subtext {
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  letter-spacing: 0.47px;
+}
+
+#recharge-novum .rc-card {
+  color: var(--color-black);
+  background: #ffffff;
+  box-shadow: 0px 2px 4px 0px #0000001A;
+  border-radius: 6px;
+  padding: 20px !important; 
+}
+
+#recharge-novum .divider {
+  border-bottom: 1px solid var(--color-thin-blue);
+  width: 100%;
+}
+
+#recharge-novum .rc-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold !important;
+  border: 0;
+  background-color: none;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.47px;
+  padding: var(--rc-spacing-3) var(--rc-spacing-4) !important;
+  border-radius: 6px;
+}
+
+#recharge-novum .rc-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+#recharge-novum .rc-btn .rc-btn--icon {
+  margin-right: var(--rc-spacing-1) !important;
+  pointer-events: none;
+}
+
+#recharge-novum .rc-btn .rc-btn--icon svg {
+  width: 0.875em;
+  font-size: 1.5em;
+}
+
+#recharge-novum .rc-btn.rc-btn--primary {
+  color: #fff;
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+#recharge-novum .rc-btn.rc-btn--primary-text {
+  color: var(--primary-color) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+#recharge-novum .rc-btn.rc-btn--primary-border {
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+#recharge-novum .rc-btn.rc-btn--link {
+  color: var(--primary-color);
+  padding: var(--rc-spacing-2) 0 !important;
+}
+#recharge-novum .rc-btn.rc-btn--link:hover, #recharge-novum .rc-btn.rc-btn--link:focus, #recharge-novum .rc-btn.rc-btn--link:active {
+  filter: brightness(0.85);
+}
+
+#recharge-novum .rc-form-control {
+  font-size: 14px;
+  width: 100%;
+  position: relative;
+  margin-bottom: var(--rc-spacing-4) !important;
+}
+
+#recharge-novum .rc-form__label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: var(--rc-spacing-2) !important;
+  margin-right: var(--rc-spacing-3) !important;
+}
+
+#recharge-novum .rc-input, #recharge-novum .rc-select {
+  width: 100%;
+  font-size: 14px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--color-thin-blue) !important;
+  padding: var(--rc-spacing-3) var(--rc-spacing-4) !important;
+  margin-bottom: 0 !important;
+  height: 42px !important;
+}
+
+#recharge-novum .rc-radio {
+  display: inline-flex;
+  vertical-align: top;
+  margin-top: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .rc-radio .rc-radio__control {
+  background: #fff;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid;
+  border-radius: 100%;
+  transition: box-shadow 200ms ease-in-out;
+}
+
+#recharge-novum .rc-radio input:focus + .rc-radio__control {
+  box-shadow: 0 0 1px 1px var(--primary-color);
+}
+
+#recharge-novum .rc-radio input:checked + .rc-radio__control::before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: currentcolor;
+}
+
+#recharge-novum .rc-radio .rc-radio__label {
+  user-select: none;
+  margin-inline-start:  var(--rc-spacing-2) !important;
+  font-size: 14px !important;
+}
+
+#recharge-novum .rc-select {
+  appearance: none !important;
+}
+
+#recharge-novum .rc-select:focus-visible {
+  outline: none;
+}
+
+#recharge-novum .rc-input:focus, #recharge-novum .rc-select:focus {
+  box-shadow: var(--primary-color) 0px 0px 0px 1px;
+  border-color: var(--primary-color) !important;
+  z-index: 1;
+}
+
+#recharge-novum .rc-modal {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  z-index: 1001;
+}
+
+#recharge-novum .rc-modal__overlay {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.64);
+  z-index: 1000;
+}
+
+#recharge-novum .rc-modal__close-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 0;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: var(--rc-spacing-2) !important;
+  z-index: 1;
+}
+#recharge-novum .rc-modal__close-btn > svg {
+  pointer-events: none;
+}
+
+
+#recharge-novum .rc-modal__content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  background: #FFF;
+  color: inherit;
+  margin-top: 3.75rem;
+  margin-bottom: 3.75rem;
+  z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  max-width: 540px;
+  padding: 28px !important;
+}
+
+#recharge-novum .rc-modal__header {
+  font-family: var(--recharge-te-secondary-font);
+  color: var(--color-black);
+  flex: 0 1 0%;
+  padding-bottom: 20px !important;
+  padding-right: 28px !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#recharge-novum .rc-modal__body {
+  font-family: var(--recharge-te-primary-font);
+  flex: 1 1 0%;
+  font-size: 14px;
+}
+
+#recharge-novum .rc-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 12px !important;
+}
+
+#recharge-novum .rc-progress {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+#recharge-novum .rc-progress__svg {
+  width: 12px;
+  height: 12px;
+  animation: 2s linear 0s infinite normal none running rc-progress-rotate;
+}
+
+#recharge-novum .rc-progress__track {
+  fill: transparent;
+  stroke: var(--primary-background);
+}
+
+#recharge-novum .rc-progress__indicator {
+  fill: transparent;
+  stroke: var(--primary-color);
+  animation: 1.5s linear 0s infinite normal none running rc-progress-spin;
+}
+
+@keyframes rc-progress-rotate {
+  0% {
+    transform: 0;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rc-progress-spin {
+  0% {
+    stroke-dasharray: 1px, 400px;
+    stroke-dashoffset: 0px;
+  }
+  50% {
+    stroke-dasharray: 400px, 400px;
+    stroke-dashoffset: -100px;
+  }
+  100% {
+    stroke-dasharray: 400px, 400px;
+    stroke-dashoffset: -260px;
+  }
+}
+
+/* Expandable Card */
+#recharge-novum .rc-expandable-card {
+  margin-bottom: 20px !important;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#recharge-novum .rc-expandable-card.in .rc-expandable-card--details, #recharge-novum .rc-expandable-card.open .rc-expandable-card--details {
+  visibility: visible;
+  display: block;
+}
+
+#recharge-novum .rc-expandable-card.open .rc-expandable-card--arrow {
+  transform: rotate(180deg);
+}
+
+#recharge-novum .rc-expandable-card--arrow {
+  align-self: center;
+  transition: all 200ms ease-in-out;
+}
+
+#recharge-novum .rc-expandable-card--summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+#recharge-novum .rc-expandable-card--details {
+  display: none;
+  visibility: hidden;
+  transition: all 200ms ease-in-out;
+  overflow: hidden;
+  height: 0;
+  font-size: 14px;
+  line-height: 14px;
+  cursor: auto;
+}
+/* End Expandable Card */
+
+/* Visually hide the content, but still allow it to be accessible */
+#recharge-novum .visually-hidden {
+  border: 0px !important;
+  clip: rect(0px, 0px, 0px, 0px) !important;
+  height: 1px !important;
+  width: 1px !important;
+  margin: -1px !important;
+  padding: 0px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  position: absolute !important;
+}

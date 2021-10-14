@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Hello {{customer.first_name}}!</p>
+    {% if subscriptions | length %}
+        <p>Your next order date: {{ subscriptions[0].next_charge_scheduled_at }}</p>
+        <p>Product title: {{ subscriptions[0].product_title }}</p>
+        <p>Variant title: {{ subscriptions[0].variant_title }}</p>
+    {% else %}
+        <p>subscriptions empty</p>
+    {% endif %}
+
+    <p>Your most recent order:</p>
+    {% if orders | length %}
+        <p>Order date: {{ orders[0].processed_at }}</p>
+        <p>Order number: {{ orders[0].shopify_order_number }}</p>
+    {% else %}
+        <p>orders empty</p>
+    {% endif %}
+{% endblock %}

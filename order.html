@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>Order details</h3>
+  <p>
+    Order #: {{ order.shopify_order_number }}<br>
+    Status: {{ order.status | capitalize }}<br>
+    Process date: {{ order.processed_at | date('%B %-d, %Y') }}<br>
+    Type: {{ order.type | capitalize }}
+  </p>
+  <div class="table-wrap">
+    <div class="table-wrapper">
+      <table class="full">
+        <thead>
+          <tr>
+            <th>Shipping address</th>
+            <th>Billing address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {% set address = order.shipping_address %}
+              <p>
+                {{ address.first_name }} {{ address.last_name }}<br>
+                {% if address.company %}
+                  {{ address.company }}<br>
+                {% endif %}
+                {{ address.address1 }} {{ address.address2 }}<br>
+                {{ address.city }} {{ address.province }} {{ address.zip }}<br>
+                {% if address.phone %}
+                  {{ address.phone }}<br>
+                {% endif %}
+                {{ address.country }}<br>
+              </p>
+            </td>
+            <td>
+              {% set address = order.billing_address %}
+              <p>
+                {{ address.first_name }} {{ address.last_name }}<br>
+                {% if address.company %}
+                  {{ address.company }}<br>
+                {% endif %}
+                {{ address.address1 }} {{ address.address2 }}<br>
+                {{ address.city }} {{ address.province }} {{ address.zip }}<br>
+                {% if address.phone %}
+                  {{ address.phone }}<br>
+                {% endif %}
+                {{ address.country }}<br>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="table-wrap">
+    <div class="table-wrapper">
+      <table class="full">
+        <thead>
+          <tr>
+            <th>Products</th>
+            <th>Quantity</th>
+            <th class="text-right">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.line_items %}
+            <tr>
+              <td>
+                {% if item.images %}
+                  <img src="{{ item.images['small'] }}"><br>
+                {% endif %}
+                {{ item.product_title }}
+                {% if item.variant_title %}
+                  <br>{{ item.variant_title }}
+                {% endif %}
+                {% if item.properties %}
+                  {% for property in item.properties | rejectattr('name', 'equalto', 'shipping_interval_frequency') | rejectattr('name', 'equalto', 'shipping_interval_unit_type') %}
+                    <br>{{ property.name }}: {{ property.value }}
+                  {% endfor %}
+                {% endif %}
+              </td>
+              <td>
+                {{ item.quantity }}
+              </td>
+              <td class="text-right">
+                {{ item.price | money_localized }}
+              </td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="2">
+              Subtotal
+            </td>
+            <td class="text-right">
+              {{ order.total_line_items_price | money_localized }}
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          {% for discount in order.discount_codes %}
+            <tr>
+              <td colspan="2">
+                Discount ({{ discount.code }})
+              </td>
+              <td class="text-right">
+                -{{ order.total_discounts | money_localized }}
+              </td>
+            </tr>
+          {% endfor %}
+          {% for shipping in order.shipping_lines %}
+            <tr>
+              <td colspan="2">
+                {{ shipping.title }} ({{ shipping.code }})
+              </td>
+              <td class="text-right">
+                {{ shipping.price | money_localized }}
+              </td>
+            </tr>
+          {% endfor %}
+          {% for tax in order.tax_lines %}
+            <tr>
+              <td colspan="2">
+                {{ tax.title }} ({{ tax.rate }}%)
+              </td>
+              <td class="text-right">
+                {{ tax.price | money_localized }}
+              </td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="2">Total</td>
+            <td class="text-right">
+              {{ order.total_price | money_localized }}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+{% endblock %}

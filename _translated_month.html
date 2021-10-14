@@ -1,0 +1,41 @@
+{% set next_charge_date = next_charge_date | downcase %}
+
+{% if 'january' in next_charge_date %}
+    {% set month = 'January' | t %}
+    {{ next_charge_date | replace('january', month) }}
+{% elif 'february' in next_charge_date %}
+    {% set month = 'February' | t %}
+    {{ next_charge_date | replace('february', month) }}
+{% elif 'march' in next_charge_date %}
+    {% set month = 'March' | t %}
+    {{ next_charge_date | replace('march', month) }}
+{% elif 'apr' in next_charge_date %}
+    {% set month = 'April' | t %}
+    {{ next_charge_date | replace('april', month) }}
+{% elif 'may' in next_charge_date %}
+    {% set month = 'May' | t %}
+    {{ next_charge_date | replace('may', month) }}
+{% elif 'june' in next_charge_date %}
+    {% set month = 'June' | t %}
+    {{ next_charge_date | replace('june', month) }}
+{% elif 'july' in next_charge_date %}
+    {% set month = 'July' | t %}
+    {{ next_charge_date | replace('july', month) }}
+{% elif 'august' in next_charge_date %}
+    {% set month = 'August' | t %}
+    {{ next_charge_date | replace('august', month) }}
+{% elif 'september' in next_charge_date %}
+    {% set month = 'September' | t %}
+    {{ next_charge_date | replace('september', month) }}
+{% elif 'october' in next_charge_date %}
+    {% set month = 'October' | t %}
+    {{ next_charge_date | replace('october', month) }}
+{% elif 'november' in next_charge_date %}
+    {% set month = 'November' | t %}
+    {{ next_charge_date | replace('november', month) }}
+{% elif 'december' in next_charge_date %}
+    {% set month = 'December' | t %}
+    {{ next_charge_date | replace('december', month) }}
+{% else %}
+   {{ next_charge_date }}
+{% endif %}

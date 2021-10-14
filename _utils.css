@@ -1,0 +1,234 @@
+/* Contains all utilites for easily appling global styling. These concepts are adopted from vuetify */
+
+/* SPACING */
+#recharge-novum .mr-0 {
+  margin-right: 0 !important;
+}
+#recharge-novum .mr-1 {
+  margin-right: var(--rc-spacing-1) !important;
+}
+#recharge-novum .mr-2 {
+  margin-right: var(--rc-spacing-2) !important;
+}
+#recharge-novum .mr-3 {
+  margin-right: var(--rc-spacing-3) !important;
+}
+#recharge-novum .mr-4 {
+  margin-right: var(--rc-spacing-4) !important;
+}
+#recharge-novum .mr-5 {
+  margin-right: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .ml-0 {
+  margin-left: 0 !important;
+}
+#recharge-novum .ml-1 {
+  margin-left: var(--rc-spacing-1) !important;
+}
+#recharge-novum .ml-2 {
+  margin-left: var(--rc-spacing-2) !important;
+}
+#recharge-novum .ml-3 {
+  margin-left: var(--rc-spacing-3) !important;
+}
+#recharge-novum .ml-4 {
+  margin-left: var(--rc-spacing-4) !important;
+}
+#recharge-novum .ml-5 {
+  margin-left: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .mb-0 {
+  margin-bottom: 0 !important;
+}
+#recharge-novum .mb-1 {
+  margin-bottom: var(--rc-spacing-1) !important;
+}
+#recharge-novum .mb-2 {
+  margin-bottom: var(--rc-spacing-2) !important;
+}
+#recharge-novum .mb-3 {
+  margin-bottom: var(--rc-spacing-3) !important;
+}
+#recharge-novum .mb-4 {
+  margin-bottom: var(--rc-spacing-4) !important;
+}
+#recharge-novum .mb-5 {
+  margin-bottom: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .mt-0 {
+  margin-top: 0 !important;
+}
+#recharge-novum .mt-1 {
+  margin-top: var(--rc-spacing-1) !important;
+}
+#recharge-novum .mt-2 {
+  margin-top: var(--rc-spacing-2) !important;
+}
+#recharge-novum .mt-3 {
+  margin-top: var(--rc-spacing-3) !important;
+}
+#recharge-novum .mt-4 {
+  margin-top: var(--rc-spacing-4) !important;
+}
+#recharge-novum .mt-5 {
+  margin-top: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .mx-0 {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+#recharge-novum .mx-1 {
+  margin-right: var(--rc-spacing-1) !important;
+  margin-left: var(--rc-spacing-1) !important;
+}
+#recharge-novum .mx-2 {
+  margin-right: var(--rc-spacing-2) !important;
+  margin-left: var(--rc-spacing-2) !important;
+}
+#recharge-novum .mx-3 {
+  margin-right: var(--rc-spacing-3) !important;
+  margin-left: var(--rc-spacing-3) !important;
+}
+#recharge-novum .mx-4 {
+  margin-right: var(--rc-spacing-4) !important;
+  margin-left: var(--rc-spacing-4) !important;
+}
+#recharge-novum .mx-5 {
+  margin-right: var(--rc-spacing-5) !important;
+  margin-left: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .my-0 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#recharge-novum .my-1 {
+  margin-top: var(--rc-spacing-1) !important;
+  margin-bottom: var(--rc-spacing-1) !important;
+}
+#recharge-novum .my-2 {
+  margin-top: var(--rc-spacing-2) !important;
+  margin-bottom: var(--rc-spacing-2) !important;
+}
+#recharge-novum .my-3 {
+  margin-top: var(--rc-spacing-3) !important;
+  margin-bottom: var(--rc-spacing-3) !important;
+}
+#recharge-novum .my-4 {
+  margin-top: var(--rc-spacing-4) !important;
+  margin-bottom: var(--rc-spacing-4) !important;
+}
+#recharge-novum .my-5 {
+  margin-top: var(--rc-spacing-5) !important;
+  margin-bottom: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .m-0 {
+  margin: 0 !important;
+}
+#recharge-novum .m-1 {
+  margin: var(--rc-spacing-1) !important;
+}
+#recharge-novum .m-2 {
+  margin: var(--rc-spacing-2) !important;
+}
+#recharge-novum .m-3 {
+  margin: var(--rc-spacing-3) !important;
+}
+#recharge-novum .m-4 {
+  margin: var(--rc-spacing-4) !important;
+}
+#recharge-novum .m-5 {
+  margin: var(--rc-spacing-5) !important;
+}
+
+#recharge-novum .pt-5 {
+  padding-top: var(--rc-spacing-5) !important;
+}
+
+/* FLEX */
+#recharge-novum .d-flex {
+  display: flex !important;
+  flex-direction: row !important;
+}
+#recharge-novum .justify-center {
+  justify-content: center !important;
+}
+#recharge-novum .justify-space-between {
+  justify-content: space-between !important;
+}
+#recharge-novum .justify-end {
+  justify-content: flex-end !important;
+}
+#recharge-novum .align-items-center {
+  align-items: center !important;
+}
+#recharge-novum .flex-1 {
+  flex: 1 !important;
+}
+
+/* DISPLAY */
+#recharge-novum .d-none {
+  display: none !important;
+}
+
+/* STACK */
+#recharge-novum .h-stack {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#recharge-novum .h-stack > :not(style) ~ :not(style) {
+  margin-left: var(--rc-spacing-4) !important;
+}
+
+#recharge-novum .v-stack {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+/* WIDTH */
+#recharge-novum .w-100 {
+  width: 100% !important;
+}
+
+/* TEXT */
+#recharge-novum .text-center {
+  text-align: center !important;
+}
+
+/* POSITION */
+#recharge-novum .position-relative {
+  position: relative !important;
+}
+#recharge-novum .position-absolute {
+  position: absolute !important;
+}
+
+/* CURSOR */
+#recharge-novum .cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Typography */
+#recharge-novum .text-body-1 {
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: .03125em!important;
+  font-family: Roboto,sans-serif!important;
+}
+
+#recharge-novum .text-body-2 {
+  font-size: .875rem!important;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: .0178571429em!important;
+  font-family: Roboto,sans-serif!important;
+}

@@ -1,0 +1,48 @@
+{% set limit = 'limit' | url_param | int or 16 %}
+{% set products_count = products | length %}
+{% if products_count > limit %}
+    {% set current_page = 'page' | url_param | int or 1 %}
+    {% set total_pages = products_count // limit %}
+    {% set remainder = products_count % limit %}
+
+    {% if remainder != 0 %}
+        {% set total_pages = total_pages + 1 %}
+    {% endif %}
+
+    {% if 'q' | url_param %}
+        {% if pagination_params %}
+            {% set pagination_params = pagination_params + '&q=' + 'q' | url_param %}
+        {% else %}
+            {% set pagination_params = '&q=' + 'q' | url_param %}
+        {% endif %}
+    {% endif %}
+
+    {% if 'preview_theme' | url_param %}
+        {% set preview_theme = '&preview_theme=' + 'preview_theme' | url_param %}
+        {% if pagination_params %}
+            {% set pagination_params = pagination_params + preview_theme %}
+        {% else %}
+            {% set pagination_params = preview_theme %}
+        {% endif %}
+    {% endif %}
+
+    <div class="grid">
+        <div class="grid__item medium-up--one-full text-center">
+            {% if current_page != 1 %}
+            <a href="?page={{ current_page - 1 }}&limit={{ limit }}{{ pagination_params }}">Prev</a>
+            {% endif %}
+
+            {% for page in range(1, total_pages + 1) %}
+            {% if current_page == page %}
+                <span>{{ page }}</span>
+            {% else %}
+                <a href="?page={{ page }}&limit={{ limit }}{{ pagination_params }}">{{ page }}</a>
+            {% endif %}
+            {% endfor %}
+
+            {% if current_page != total_pages %}
+            <a href="?page={{ current_page + 1 }}&limit={{ limit }}{{ pagination_params }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

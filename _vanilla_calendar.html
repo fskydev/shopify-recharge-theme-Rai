@@ -1,0 +1,28 @@
+<div id="v-cal">
+  <div class="vcal-header">
+    <button class="vcal-btn" data-calendar-toggle="previous">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="vcal-header__label" data-calendar-label="month">
+      March 2020
+    </div>
+
+    <button class="vcal-btn" data-calendar-toggle="next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="vcal-week">
+    <span> {{ 'cp_s_sunday' | t }} </span>
+    <span> {{ 'cp_m_monday' | t }} </span>
+    <span> {{ 'cp_t_tuesday' | t }} </span>
+    <span> {{ 'cp_w_wednesday' | t  }} </span>
+    <span> {{ 'cp_t_thursday' | t  }} </span>
+    <span> {{ 'cp_f_friday' | t  }} </span>
+    <span> {{ 'cp_s_saturday' | t  }} </span>
+  </div>
+  <div class="vcal-body" data-calendar-area="month"></div>
+</div>
+<div data-calendar-label="picked"></div>
+<input type="date" name="date" id="next_charge_date" value="">

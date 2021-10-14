@@ -1,0 +1,19 @@
+<div class="rc-card mb-5 cursor-pointer rc_card_container js-edit-billing-address" data-title="Edit billing address" onclick="renderBillingAddressHandler(event);">
+  <div>
+    <p class="margin-bottom-20 color-dark-green title-bold font-spacing text-uppercase">{{ 'Email' | t }}</p>
+    <p>{{ customer.email }}</p>
+
+    <p class="color-dark-green title-bold font-spacing margin-20-0 text-uppercase">{{ 'Billing_Address' | t }}</p>
+    <div class="element__flex-row">
+      {% if not payment_method.billing_address %}
+        <p>{{ 'cp_no_billing_address' | t }}</p>
+      {% else %}
+       {% set address = payment_method.billing_address %}
+        <p class="text-font-14"> {{ address.first_name }} {{ address.last_name }} </p>
+        <p> {{ address.address1 }} {{ address.address2 if address.address2 else '' }} </p>
+        <p> {{ address.city }} {{ address.province }} {{ address.zip }} </p>
+      {% endif %}
+    </div>
+  </div>
+  <a href="" class="js-billing-edit-btn"><i class="fas fa-chevron-right"></i></a>
+</div>

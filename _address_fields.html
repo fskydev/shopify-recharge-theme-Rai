@@ -1,0 +1,56 @@
+<div class="h-stack">
+  <div role="group" class="rc-form-control">
+    <label id="first_name-label" for="first_name" class="rc-form__label">{{ 'First_Name' | t }}</label>
+    <input type="text" id="first_name" class="rc-input" type="text" name="first_name" value="" required>
+  </div>
+
+  <div role="group" class="rc-form-control">
+    <label id="last_name-label" for="last_name" class="rc-form__label">{{ 'Last_Name' | t }}</label>
+    <input type="text" id="last_name" class="rc-input" type="text" name="last_name" value="" required>
+  </div>
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="company-label" for="company" class="rc-form__label">{{ 'Company' | t }}</label>
+  <input type="text" id="company" class="rc-input" type="text" name="company" value="">
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="address1-label" for="address1" class="rc-form__label">Address 1</label>
+  <input type="text" id="address1" class="rc-input" type="text" name="address1" value="" required>
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="address2-label" for="address2" class="rc-form__label">Address 2</label>
+  <input type="text" id="address2" class="rc-input" type="text" name="address2" value="">
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="country-label" for="country" class="rc-form__label">{{ 'Country' | t }}</label>
+  <select class="rc-select" name="country" id="country"
+    onchange="ReCharge.Forms.updateProvinces(this); ReCharge.Novum.Utils.getZipLabel(this.value)" required></select>
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="city-label" for="city" class="rc-form__label">{{ 'City' | t }}</label>
+  <input type="text" id="city" class="rc-input" type="text" name="city" value="" required>
+</div>
+
+<div class="h-stack">
+  <div role="group" class="rc-form-control">
+    <label id="province-label" for="province" class="rc-form__label">{{ 'Province_State' | t }}</label>
+    <input class="rc-input" type="text" name="province" id="province" value="">
+    <select class="rc-select" id="province_selector" onchange="ReCharge.Forms.updateProvinceInput(this);"
+      style="display: none;"></select>
+  </div>
+
+  <div role="group" class="rc-form-control">
+    <label id="zip-label" for="zip" class="rc-form__label">Zip code</label>
+    <input type="text" id="zip" class="rc-input" type="text" name="zip" value="" required>
+  </div>
+</div>
+
+<div role="group" class="rc-form-control">
+  <label id="phone-label" for="phone" class="rc-form__label">{{ 'Phone' | t }}</label>
+  <input type="text" id="phone" class="rc-input" type="text" name="phone" value="">
+</div>

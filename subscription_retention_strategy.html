@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h3>Cancel {{ subscription.product_title }}</h3>
+
+	<p>
+		{{ retention_strategy.prevention_text }}
+	</p>
+
+	{% if retention_strategy.incentive_type == 'discount' %}
+		<form method="post" action="{{ subscription.address_id | discount_apply_url }}" id="ReChargeForm_strategy">
+			<input type="hidden" name="redirect_url" value="{{ subscription_list_url }}">
+			<input type="hidden" value="{{ retention_strategy.discount_code }}" name="discount_code">
+			<p>
+				<button type="submit" class="btn">Apply discount "{{ retention_strategy.discount_code }}"</button>
+			</p>
+		</form>
+	{% elif retention_strategy.incentive_type == 'skip_charge' %}
+		<form method="post" action="{{ subscription.id | subscription_skip_url }}" id="ReChargeForm_strategy">
+			<input type="hidden" name="redirect_url" value="{{ subscription.id | subscription_url }}">
+			<p>
+				<button type="submit" class="btn">Skip next order</button>
+			</p>
+        </form>
+	{% elif retention_strategy.incentive_type == 'swap_product' and subscription.is_swappable %}
+		<p id="ReChargeForm_strategy">
+		  <a href="{{ subscription.id | subscription_swap_search_url }}" class="btn">Swap product with something else</a>
+		</p>
+	{% elif retention_strategy.incentive_type == 'delay_subscription' %}
+		<form method="post" action="{{ subscription.id | subscription_delay_url }}" id="ReChargeForm_strategy">
+            <input type="hidden" name="redirect_url" value="{{ subscription_list_url }}">
+            <p>
+                <label for="delay_for">Delay for</label>
+                <select name="delay_for" id="delay_for">
+                    {#
+                        WARNING: If your business restricts the days that it ships orders (e.g. only ships on the 1st of
+                        the month or only ship on Mondays) then please provide delay options that match these shipping
+                        date restrictions.
+                    #}
+                    <option value="">-- Select --</option>
+                    {% if subscription.order_interval_unit == 'day' %}
+                        <option value="7_days">7 days</option>
+                        <option value="14_days">14 days</option>
+                        <option value="21_days">21 days</option>
+                    {% elif subscription.order_interval_unit == 'week' %}
+                        <option value="1_week">1 week</option>
+                        <option value="2_weeks">2 weeks</option>
+                        <option value="3_weeks">3 weeks</option>
+                    {% elif subscription.order_interval_unit == 'month' %}
+                        <option value="1_month">1 month</option>
+                        <option value="2_month">2 months</option>
+                        <option value="3_month">3 months</option>
+                    {% endif %}
+                </select>
+			</p>
+			<p>
+				<button type="submit" class="btn">Delay order</button>
+			</p>
+        </form>
+	{% endif %}
+
+	{% if retention_strategy.incentive_type %}
+		<br>
+		<p>
+			<a href="#" onclick="ReCharge.Helpers.toggle('ReChargeForm_cancel'); return false;" class="btn btn--secondary">No thanks</a>
+		</p>
+	{% endif %}
+
+	<form method="post" action="{{ subscription.id | subscription_cancel_url }}" id="ReChargeForm_cancel" {% if retention_strategy.incentive_type %}style="display: none;"{% endif %}>
+		<input type="hidden" name="redirect_url" value="{{ subscription_list_url }}">
+		<input type="hidden" name="cancellation_reason" value="{{ retention_strategy.cancellation_reason }}">
+		<p>
+			<label for="cancellation_reason_comments">Comments</label>
+			<textarea id="cancellation_reason_comments" name="cancellation_reason_comments"></textarea>
+		</p>
+		<p>
+			<button type="submit" class="btn">Cancel subscription</button>
+		</p>
+	</form>
+
+	<hr>
+
+	<p>
+		<a href="{{ subscription.id | subscription_url }}">Return to subscription</a>
+	</p>
+{% endblock %}

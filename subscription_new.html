@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if not product %}
+    <h3>Add product</h3>
+
+    <p>Product not found</p>
+    <br>
+    <p>
+      <a href="{{ product_search_url }}">Return product search</a>
+    </p>
+  {% else %}
+    {% set shopify_details = product.shopify_details %}
+    {% set subscription_defaults = product.subscription_defaults %}
+
+    <div class="grid">
+      <div class="grid__item medium-up--one-third">
+        {% if shopify_details.image %}
+          <img src="{{ shopify_details.image['src'] }}" class="grid-view-item__image">
+        {% else %}
+          <img src="https://rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" class="grid-view-item__image">
+        {% endif %}
+      </div>
+      <div class="grid__item medium-up--two-thirds">
+        <h3>{{ shopify_details.title }}</h3>
+        <h4 data-property="price">
+          {{ shopify_details.variants[0]['price'] | money }}
+        </h4>
+
+        <form type="post" action="{{ subscription_list_url if subscription_defaults else onetime_list_url }}" id="ReChargeForm_subscriptionNew" class="rc_form">
+          <fieldset>
+            <input type="hidden" name="redirect_url" value="{{ subscription_list_url }}">
+            {% if subscription_defaults %}
+              <div class="rc_form__group" style="{{ '' if settings and settings.customer_portal.onetime.enabled else 'display: none;' }}">
+                <label>Purchase type:</label>
+                {% if settings and settings.customer_portal.onetime.enabled %}
+                  {% if 'subscription_only' in subscription_defaults.storefront_purchase_options %}
+                    <label>
+                        <input type="radio" name="purchase_type" checked value="subscription" onchange="optionChangeCallback()">
+                        Subscribe
+                        {% if product.discount_amount %}
+                          and save
+                          {% if product.discount_type == 'percentage' %}
+                              ({{ product.discount_amount }}%)
+                          {% else %}
+                              ({{ product.discount_amount | money }})
+                          {% endif %}
+                        {% endif %}
+                    </label>
+                  {% else %}
+                    <label>
+                      <input type="radio" name="purchase_type" checked value="subscription" onchange="optionChangeCallback()">
+                      Subscribe
+                      {% if product.discount_amount %}
+                        and save
+                        {% if product.discount_type == 'percentage' %}
+                            ({{ product.discount_amount }}%)
+                        {% else %}
+                            ({{ product.discount_amount | money }})
+                        {% endif %}
+                      {% endif %}
+                    </label>
+                    <label>
+                      <input type="radio" name="purchase_type" value="onetime" onchange="optionChangeCallback()">
+                      One-time
+                    </label>
+                  {% endif %}
+                {% else %}
+                  <label>
+                    <input type="radio" name="purchase_type" checked value="subscription">
+                    Subscribe
+                  </label>
+                {% endif %}
+              </div>
+
+              <br>
+
+              <div class="rc_form__group" id="product_schedule_container">
+                <label for="charge_interval_frequency">Subscription options:</label>
+                {% if subscription_defaults.order_interval_frequency_options | length > 1 %}
+                  <select name="charge_interval_frequency" onchange="document.querySelector('[name=order_interval_frequency]').value=this.value">
+                    {% for frequency in subscription_defaults.order_interval_frequency_options %}
+                      <option value="{{ frequency }}">{{ frequency }} {{ subscription_defaults.order_interval_unit }}</option>
+                    {% endfor %}
+                  </select>
+                {% else %}
+                  <input type="hidden" name="charge_interval_frequency" value="{{ subscription_defaults.charge_interval_frequency }}">
+                  <p>
+                    {% if subscription_defaults.charge_interval_frequency | int != subscription_defaults.order_interval_frequency_options[0] | int %}
+                      Deliver every
+                      {{ subscription_defaults.order_interval_frequency_options[0] }} {{ subscription_defaults.order_interval_unit }} <br>
+                      Charge every {{ subscription_defaults.charge_interval_frequency }}
+                      {{ subscription_defaults.order_interval_unit }}
+                    {% else %}
+                      Deliver every
+                      {{ subscription_defaults.order_interval_frequency_options[0] }}
+                      {{ subscription_defaults.order_interval_unit }}
+                    {% endif %}
+                  </p>
+                {% endif %}
+                <input type="hidden" name="order_interval_unit" value="{{ subscription_defaults.order_interval_unit | lower | replace('s', '') }}">
+                <input type="hidden" name="order_interval_frequency" value="{{ subscription_defaults.order_interval_frequency_options[0] }}">
+                {% if subscription_defaults.expire_after_specific_number_of_charges %}
+                <input type="hidden" name="expire_after_specific_number_of_charges" value="{{ subscription_defaults.expire_after_specific_number_of_charges }}">
+                {% endif %}
+              </div>
+
+              <br>
+            {% else %}
+              <div class="rc_form__group">
+                <label>
+                  <input type="radio" name="purchase_type" value="onetime" checked>
+                  One-time
+                </label>
+              </div>
+
+              <br>
+            {% endif %}
+
+            <div class="rc_form__group rc_option__wrapper">
+              {% for option in shopify_details.options | sort(attribute="position") %}
+                <div class="rc_option">
+                  <label for="option_{{ option.shopify_id }}">{{ option.name }}:</label>
+                  <select id="option_{{ option.shopify_id }}" class="rc_option__selector" onchange="optionChangeCallback();">
+                    {% for value in option['values'] %}
+                      <option value="{{ value }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+              <input type="hidden" id="shopify_variant_id" name="shopify_variant_id" value="{{ shopify_details.variants[0]['shopify_id'] }}">
+            </div>
+
+            <br>
+
+            <div class="rc_form__group">
+              <label>Quantity:</label>
+              <input type="number" name="quantity" placeholder="1" min="1" value="1">
+            </div>
+
+            <br>
+
+            <div class="rc_form__group">
+              <label>Address:</label>
+              {% if not addresses %}
+                No address on file, please <a href="{{ address_new_url }}">add an address</a>.
+              {% else %}
+                <select name="address_id" id="address_id" onchange="updateNextChargeDate(this);">
+                  {% for address in addresses %}
+                    <option value="{{ address.id }}">
+                      {{ address.first_name }} {{ address.last_name }} {{ address.address1 }} {{ address.address2 }}
+                    </option>
+                  {% endfor %}
+                </select>
+              {% endif %}
+            </div>
+
+            <br>
+
+            {% if addresses and next_charge_date_options %}
+              {% set first_address_charge_dates = next_charge_date_options[0][addresses[0].id | string] %}
+              <div>
+                <div id="product_dates_container">
+                  <div class="rc_form__group">
+                    <label for="address_charge_dates">Next charge date:</label>
+                    <select id="address_charge_dates" onchange="dateChangeCallback(this);">
+                      {% for charge_date in first_address_charge_dates if first_address_charge_dates %}
+                        {% if charge_date == 'custom' %}
+                            <option value="custom">Custom date</option>
+                        {% else %}
+                            <option value="{{ charge_date | date('%Y-%m-%d') }}">
+                                {{ charge_date | date('%Y-%m-%d') }}
+                            </option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div id="next_charge_date_container" {% if first_address_charge_dates %}style="display: none;"{% endif %}>
+                  <br>
+                  <input type="date" name="next_charge_scheduled_at" required {% if first_address_charge_dates and first_address_charge_dates[0] != 'custom' %} value="{{ first_address_charge_dates[0] | date('%Y-%m-%d') }}"{% endif %}>
+                </div>
+              </div>
+
+              <br>
+            {% endif %}
+
+            <div>
+              <button type="submit" class="btn">Add product</button>
+              <a href="{{ product.handle | shop_products_url }}" target="_blank" rel="noopener noreferrer">View on store</a>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+
+        var product = {{ shopify_details | json }},
+          dates = {{ next_charge_date_options[0] | json }},
+          changeEvent = document.createEvent('HTMLEvents');
+        changeEvent.initEvent('change', true, false);
+
+        function optionChangeCallback() {
+          // Join segmented product options to determine the actual product and update
+          var joinedVariantTitle = Array.prototype.map.call(document.querySelectorAll('.rc_option__selector'), function(select) {
+              return select.value;
+            }).join(' / ');
+
+          // Find the matching variant object by title
+          var newVariant = Array.prototype.filter.call(product.variants, function(variant) {
+            return variant.title === joinedVariantTitle;
+          })[0];
+
+          checkVariant(newVariant);
+
+          {% if subscription_defaults %}
+            {#{% if not settings.inventory_behaviour_subscriptions or not settings.inventory_behaviour_onetimes %}#}
+              checkInventory(newVariant);
+            {#{% endif %}#}
+
+            toggleSubscriptionUI();
+            updateFormAction();
+            updateDisplayPrice(newVariant);
+          {% endif %}
+        }
+
+        function checkVariant(variant) {
+          setAvailability(true);
+
+          // Selects the new variant option
+          try {
+            document.querySelector('[name="shopify_variant_id"]').value = variant.shopify_id;
+          }
+          catch(error) {
+            setAvailability(false);
+            return;
+          }
+        }
+
+        function setAvailability(available) {
+          var submitButton = document.querySelector('#ReChargeForm_subscriptionNew button[type="submit"]');
+          if (available) {
+            submitButton.disabled = false;
+            submitButton.innerText = 'Add product';
+          } else {
+            submitButton.disabled = true;
+            submitButton.innerText = 'Unavailable';
+          }
+        }
+
+        {% if subscription_defaults %}
+          function checkInventory(variant) {
+            setAvailability(true);
+
+            var oneTimePolicy = {{ 'true' if product.inventory_policy.one_time == '1' else 'false' }},
+                subscriptionPolicy = {{ 'true' if product.inventory_policy.subscription == '1' else 'false' }},
+                quantity = document.querySelector('[name="quantity"]').value,
+                is_subscription = (document.querySelector('[name="purchase_type"]:checked').value === 'subscription');
+
+            if (oneTimePolicy && subscriptionPolicy) { return; }
+
+            if (quantity <= variant.inventory_quantity) { return; }
+
+            if (is_subscription && !subscriptionPolicy) {
+              setAvailability(false);
+            }
+            if (!is_subscription && !oneTimePolicy) {
+              setAvailability(false);
+            }
+          }
+        {% endif %}
+
+        function toggleSubscriptionUI() {
+          if (document.querySelector('[name="purchase_type"]:checked').value === 'onetime') {
+            document.querySelector('#product_schedule_container').style.display = 'none';
+          } else {
+            document.querySelector('#product_schedule_container').style.display = 'block';
+          }
+        }
+
+        function updateFormAction() {
+          if (document.querySelector('[name="purchase_type"]:checked').value === 'onetime') {
+            document.querySelector('#ReChargeForm_subscriptionNew').setAttribute('action', '{{ onetime_list_url }}');
+          } else {
+            document.querySelector('#ReChargeForm_subscriptionNew').setAttribute('action', '{{ subscription_list_url }}');
+          }
+        }
+
+        function updateDisplayPrice(variant) {
+          var price = +variant.price,
+              hasDiscount = {% if product.discount_amount %}true{% else %}false{% endif %};
+
+          if (document.querySelector('[name="purchase_type"]:checked').value === 'subscription' && hasDiscount) {
+            {% if product.discount_type == 'percentage' %}
+              price *= {{ 1 - product.discount_amount / 100 }};
+            {% else %}
+              price -= +{{ product.discount_amount or '0' }};
+            {% endif %}
+          }
+
+          {# TODO: Figure out a way to get the | money filter used here. #}
+          document.querySelectorAll('[data-property="price"]').forEach(function(elem) {
+            elem.innerHTML = '$' + price.toFixed(2);
+          });
+        }
+
+        function dateChangeCallback(elem) {
+          if (!elem.value || elem.value === 'custom') {
+            document.querySelector('#next_charge_date_container').setAttribute('style', 'display: block;');
+            return
+          }
+          document.querySelector('#next_charge_date_container').setAttribute('style', 'display: none;');
+          document.querySelector('[name="next_charge_scheduled_at"]').value = elem.value;
+        }
+
+        function buildDates(addressId) {
+          if (!addressId || !dates[addressId]) {
+            document.querySelector('#next_charge_date_container').setAttribute('style', 'display: block;');
+            return '';
+          }
+          return [
+            '<select id="address_charge_dates" onchange="dateChangeCallback(this);">',
+              dates[addressId].map(function(date) {
+                if (date === 'custom') {
+                  return '<option value="">Custom date</option>';
+                }
+                if (date !== 'custom') {
+                  return '<option value="' + date + '">' + date + '</option>';
+                }
+              }),
+            '</select>'
+          ].join('');
+        }
+
+        function updateNextChargeDate(elem) {
+          var address = elem.value;
+          document.querySelector('#address_charge_dates').innerHTML = buildDates(address);
+          if (document.querySelector('#address_charge_dates')) {
+            var changeEvent = document.createEvent('HTMLEvents');
+            changeEvent.initEvent('change', true, false);
+            document.querySelector('#address_charge_dates').dispatchEvent(changeEvent);
+          }
+        }
+
+        optionChangeCallback();
+        document.querySelector('#address_id').dispatchEvent(changeEvent);
+      })();
+    </script>
+
+  {% endif %}
+{% endblock %}

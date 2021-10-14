@@ -1,0 +1,140 @@
+input.is-error,
+textarea.is-error,
+select.is-error,
+.is-error input,
+.is-error textarea,
+.is-error select {
+    border-color: #e63235;
+    background-color: #f0f0f0;
+}
+
+.rc_form__cards__zipcode {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+#credit-card-form,
+#credit-card-form *,
+#credit-card-form *:after,
+#payment-form-selection-page,
+#payment-form-selection-page *,
+#payment-form-selection-page *:after,
+#sepa-debit-form,
+#sepa-debit-form *,
+#sepa-debit-form *:after {
+    font-family: Roboto, sans-serif;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#credit-card-form,
+#edit-customer-card-form,
+#payment-form-selection-page,
+#sepa-debit-form {
+    width: 100%;
+    max-width: 100%;
+}
+
+#credit-card-form input,
+#credit-card-form .rc_form__input,
+#sepa-debit-form .rc_form__input,
+#edit-customer-card-form input {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #f0f0f0;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+#credit-card-form .rc_form__label,
+#edit-customer-card-form .rc_form__label,
+#payment-form-selection-page .rc_form__label,
+#sepa-debit-form .rc_form__label {
+    color: #252525;
+}
+
+#credit-card-form .rc_form__input > div,
+#sepa-debit-form .rc_form__input > div {
+    width: 100%;
+}
+
+#credit-card-form .rc_button,
+#edit-customer-card-form .rc_button,
+#payment-form-selection-page .rc_button,
+#sepa-debit-form .rc_button {
+    background: #252525;
+    border-radius: 5px;
+    border: 1px solid #00000000;
+    padding: 15px 20px;
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 1.47px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+#credit-card-form .rc_button:disabled {
+    background: no-repeat 83% 50%;
+}
+
+#credit-card-form .rc_button:hover {
+    cursor: pointer;
+}
+
+#credit-card-form .rc_form,
+#edit-customer-card-form .rc_form {
+    width: 100%;
+}
+
+#credit-card-form .rc_form__fieldset {
+    font-size: 14px;
+}
+
+.rc_form__group.rc_form__group--exp_month,
+.rc_form__group.rc_form__group--cvv {
+    display: inline-block !important;
+    width: 48%;
+    margin-bottom: 0;
+}
+
+.rc_form__group.rc_form__group--cvv {
+    margin-left: 2.5%;
+}
+
+.rc_form__group.rc_form__group--number .rc_form__input {
+    margin: 0;
+}
+
+#cardExpiry-element,
+#cardCvc-element {
+    margin-bottom: 0 !important;
+}
+
+#credit-card-form .rc_form__fieldset,
+#sepa-debit-form .rc_form__fieldset {
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+}
+
+/* non-stripe styles */
+.rc_form__group--exp_month + .rc_form__group--exp_year {
+    width: 48%;
+    display: inline-block;
+    margin-left: 2.5%;
+}
+
+.rc_form__group--exp_year + .rc_form__group--cvv {
+    width: 100%;
+    margin-left: 0;
+}
+
+.rc_form__group--exp_year + .rc_form__group--cvv #cvv {
+    margin-bottom: 5px;
+}

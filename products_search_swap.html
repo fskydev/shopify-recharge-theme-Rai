@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Swap product</h3>
+    <h4>Current product:</h4>
+
+    <div class="grid grid--uniform grid--view-items">
+        <div class="grid__item grid__item--collections medium-up--one-quarter">
+            <div class="grid-view-item">
+                <div class="grid-view-item__image-wrapper">
+                {% if 'product' in subscription and subscription.product.shopify_details and subscription.product.shopify_details.image %}
+                    <img src="{{ subscription.product.shopify_details.image | img_url }}" class="grid-view-item__image">
+                {% else %}
+                    <img src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" class="grid-view-item__image">
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="grid__item grid__item--collections medium-up--three-quarters">
+            <div class="grid-view-item">
+                <h5>
+                    {{ subscription.product_title }}
+                    {% if subscription.variant_title %} ({{ subscription.variant_title }}) {% endif %}
+                </h5>
+                {{ subscription.quantity }} every {{ subscription.order_interval_frequency }}
+                {% if subscription.order_interval_frequency and subscription.order_interval_frequency | int > 1 %}
+                    {{ subscription.order_interval_unit | title + 's' }}<br>
+                {% else %}
+                    {{ subscription.order_interval_unit | title }}<br>
+                {% endif %}
+            </div>
+            {{ subscription.price | money }}
+        </div>
+    </div>
+
+    <hr>
+
+    <h4>New product:</h4>
+
+    {% set search_form_action_url = subscription.id | subscription_swap_search_url %}
+
+    <form action="{{ search_form_action_url }}" method="get" id="rc_product_search" _lpchecked="1">
+        <input type="search" id="product_search" name="q" placeholder="Enter product name" value="{% if form.q %}{{ form.q }}{% endif %}" class="isp_ignore">
+	      {% if 'preview_theme' | url_param %}
+			<input type="hidden" id="product_search_preview_theme" name="preview_theme" value="{{ 'preview_theme' | url_param }}" class="isp_ignore">
+        {% endif %}
+        <input type="hidden" id="product_search_swap_subscription_id" name="swap_subscription_id" value="{{ subscription.id }}" class="isp_ignore">
+        <input type="hidden" id="product_search_page" name="page" value="{{ 'page' | url_param | int or 1 }}" class="isp_ignore">
+        <input type="hidden" id="product_search_limit" name="limit" value="{{ 'limit' | url_param | int or 16 }}" class="isp_ignore">
+        <button type="submit" id="trigger_search" class="btn">Search</button>
+    </form>
+
+    <hr>
+
+    {% if not products %}
+        {% if form.q %}
+            <p>No products found</p>
+        {% else %}
+            <p>Enter a search term and press search</p>
+        {% endif %}
+    {% else %}
+        <div class="grid grid--uniform grid--view-items">
+            {% for product in products %}
+                {% set product_url = subscription.id | subscription_swap_url(shopify_product_id = product.shopify_details.shopify_id | string) %}
+                {% set product_title = product.title if product.title else product.shopify_details.title | replace('Auto renew', '') | escape %}
+                {% set product_price = product.shopify_details.variants[0].price %}
+
+                {% include '_product.html' %}
+            {% endfor %}
+        </div>
+
+        {% set pagination_params = '&swap_subscription_id={}'.format(subscription.id) if subscription %}
+        {% include '_product_search_pagination.html' %}
+    {% endif %}
+
+    <script>
+        if (window.location.search) {
+            ReCharge.Utils.updateURLs(window.location.search);
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,27 @@
+<style>
+    {% include '_pagination.css' %}
+</style>
+
+<div class="rct_pagination__container rct_pagination__container--add rct_pagination__container--hidden">
+    <span 
+        class="rct_pagination__prev rct_pagination__prev--add rct_pagination__prev--disabled"
+        onclick="ReCharge.Novum.Pagination.previousPageHandler(event)"
+        data-handler-type="add"
+    >
+        <i class="fas fa-chevron-left"></i>
+    </span>
+    <span 
+        class="rct_pagination__page rct_pagination__current--add rct_pagination__page--current" 
+        data-pagination-current-page
+        data-handler-type="add"
+    >
+        1
+    </span>
+    <span 
+        class="rct_pagination__next rct_pagination__next--add "
+        onclick="ReCharge.Novum.Pagination.nextPageHandler(event)"
+        data-handler-type="add"
+    >
+        <i class="fas fa-chevron-right"></i>
+    </span>
+</div>

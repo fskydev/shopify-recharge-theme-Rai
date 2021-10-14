@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        #customer-card-form {
+            width: 100%;
+            height: 450px;
+        }
+    </style>
+    <h2 class="h4">Card on file</h2>
+
+    {{ payment_source_form_url }}
+
+    <a href="{{ payment_source_list_url }}">Return to billing information</a>
+
+{% endblock %}

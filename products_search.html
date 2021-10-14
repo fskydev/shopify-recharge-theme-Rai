@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>Product search</h3>
+
+    {% set search_form_action_url = product_search_url %}
+
+    <form action="{{ search_form_action_url }}" method="get" id="rc_product_search" _lpchecked="1">
+        <input type="search" id="product_search" name="q" placeholder="Enter product name" value="{% if form.q %}{{ form.q }}{% endif %}" class="isp_ignore">
+	      {% if 'preview_theme' | url_param %}
+			<input type="hidden" id="product_search_preview_theme" name="preview_theme" value="{{ 'preview_theme' | url_param }}" class="isp_ignore">
+        {% endif %}
+        <input type="hidden" id="product_search_page" name="page" value="{{ 'page' | url_param | int or 1 }}" class="isp_ignore">
+        <input type="hidden" id="product_search_limit" name="limit" value="{{ 'limit' | url_param | int or 16 }}" class="isp_ignore">
+        <button type="submit" id="trigger_search" class="btn">Search</button>
+    </form>
+
+    <hr>
+
+    {% if not products %}
+        {% if form.q %}
+            <p>No products found</p>
+        {% else %}
+            <p>Enter a search term and press search</p>
+        {% endif %}
+    {% else %}
+        <div class="grid grid--uniform grid--view-items">
+        {% for product in products %}
+            {% if store["external_platform"] == "big_commerce" %}
+                {% set product_title = product["title"] %}
+                {% set product_price = product["minimum_variant_price"]%}
+                <div style="border-width: 1px; border-style: solid;">
+                    <p>title: {{product_title}}</p>
+                    <p>price: {{product_price}}</p>
+                </div>
+            {% else %}
+                {% set product_url = product.shopify_details.shopify_id | subscription_new_url %}
+                {% set product_title = product.title if product.title else product.shopify_details.title | replace('Auto renew', '') | escape %}
+                {% set product_price = product.shopify_details.variants[0].price %}
+                {% include '_product.html' %}
+            {%endif%}
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    {% include '_product_search_pagination.html' %}
+
+    <script>
+        if (window.location.search) {
+            ReCharge.Utils.updateURLs(window.location.search);
+        }
+    </script>
+{% endblock %}

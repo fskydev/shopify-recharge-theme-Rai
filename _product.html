@@ -1,0 +1,40 @@
+<div class="grid__item grid__item--collections medium-up--one-quarter">
+    <div class="grid-view-item">
+        <a
+            href="{{ product_url }}"
+            title="{{ product_title }}"
+            id="product_{{ product.shopify_details.shopify_id }}"
+            class="grid-view-item__link grid-view-item__image-container"
+        >
+            <div class="grid-view-item__image-wrapper">
+                {% if product.shopify_details.image %}
+                    <img
+                        src="{{ product.shopify_details.image | img_url }}"
+                        class="grid-view-item__image"
+                    />
+                {% else %}
+                    <img
+                        src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png"
+                        class="grid-view-item__image"
+                    />
+                {% endif %}
+            </div>
+            <div class="grid-view-item__title">
+                {{ product_title }}
+            </div>
+        </a>
+        <div class="grid-view-item__price">
+            {% if product.discount_amount %}
+                {% if product.discount_type == 'percentage' %}
+                    {% set product_price = product_price | float %}
+                    {% set calculate_discounted = product_price * (1 - product.discount_amount / 100) %}
+                    {{ calculate_discounted | money }}
+                {% else %}
+                    {{ product_price - product.discount_amount | money }}
+                {% endif %}
+            {% else %}
+                {{ product_price | money }}
+            {% endif %}
+        </div>
+    </div>
+</div>

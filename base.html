@@ -1,0 +1,243 @@
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous">
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<script>
+    jconfirm.defaults = {
+        title: '',
+        useBootstrap: false,
+        buttons: {
+            cancel: {
+                text: 'Cancel',
+                keys: ['esc'],
+            },
+            ok: {
+                text: 'OK',
+                keys: ['enter'],
+            },
+        },
+        animateFromElement: false
+    };
+
+    if ($ && $.alert) {
+        window.alert = function(content) {
+            $.alert({
+                content: content,
+                draggable: false,
+                buttons: {
+                    cancel: {
+                        isHidden: true
+                    }
+                }
+            });
+        };
+    }
+</script>
+
+<!-- Import axios -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+<!-- Roboto -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+>
+
+<!-- import Merriweather font -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap"
+    rel="stylesheet"
+>
+
+<script>
+    {% include '_scripts.js' %}
+</script>
+<script>
+    {% include '_utils.js' %}
+</script>
+<script>
+    {% include '_helpers.js' %}
+</script>
+<script>
+    {% include '_addresses.js' %}
+</script>
+
+<script>
+    // Apply CSS styles
+    let body = document.querySelector("body");
+    if (body) {
+        body.setAttribute("id", "recharge-novum");
+    }
+
+    const previewMode = sessionStorage.getItem("rc_preview_param");
+    if (previewMode === null) {
+      sessionStorage.setItem(
+        "rc_preview_param",
+        window.location.search.split("&")[1]
+      );
+    }
+
+    function getToken() {
+        var value = new RegExp("[?&]token=([^&#]*)", "i").exec(window.location.href);
+        return value ? value[1] : "";
+    }
+
+    function onLoad() {
+        window.customerToken = getToken();
+
+        let mainEl = document.querySelector("main");
+        if (mainEl) {
+            mainEl.setAttribute("class", "");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", onLoad);
+
+    {% if settings.customer_portal.hosted_customer_portal %}
+        const { external_platform, domain, name } = {{ store | json }};
+
+        function updateAccountLink() {
+            let account_link = document.querySelector('#rc_account_link');
+            const is_shopify = external_platform === 'shopify';
+
+            if (is_shopify) {
+                account_link.setAttribute('href', `https://${domain}/account`);
+            } else {
+                account_link.setAttribute('href', `https://${domain}/account.php`);
+            }
+
+            addTitleFaviconForHostedPortal();
+        }
+
+        function addTitleFaviconForHostedPortal() {
+            const title = document.querySelector('title');
+            const head =  document.querySelector('head');
+            const logo = "{{ settings.customer_portal.custom_code.header_logo_url }}";
+
+            if (title != null) {
+                title.innerHTML = `${name}`;
+                head.innerHTML +=
+                    `<link rel="shortcut icon" href="${logo}">`;
+            } else {
+                head.innerHTML += `
+                    <title>${name}</title>
+                    <link rel="shortcut icon" href="${logo}">
+                `;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', updateAccountLink);
+    {% endif %}
+
+</script>
+
+{% if settings.customer_portal.hosted_customer_portal %}
+    <!-- Hosted style fixes -->
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        #recharge-te {
+            min-height: 100%;
+        }
+    </style>
+    <script>
+        (() => {
+            const meta = document.createElement('meta');
+
+            meta.name='viewport';
+            meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0');
+
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        })();
+    </script>
+{% endif %}
+
+<style>
+    {% include '_styles.css' %}
+</style>
+<style>
+    {% include '_components.css' %}
+</style>
+<style>
+    {% include '_utils.css' %}
+</style>
+<style>
+    {% include '_card.css' %}
+</style>
+<style>
+    {% include '_modal.css' %}
+</style>
+<style>
+    {% include '_vanilla_calendar.css' %}
+</style>
+<link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+<!-- Import fontawesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+{% if settings.customer_portal.custom_code.header %}
+    {{ settings.customer_portal.custom_code.header | safe }}
+{% endif %}
+
+<div id="recharge-te">
+    {% if settings.customer_portal.hosted_customer_portal %}
+        <header class="rc_theme__header">
+            <a data-rc-account-link id="rc_account_link" href="/account">
+                <i class="fas fa-chevron-left"></i>
+                {{ 'cp_back_to_my_account' | t }}
+            </a>
+            <a id="rc-main-logo-link" href="{{ subscription_list_url }}">
+                {% if settings.customer_portal.custom_code.header_logo_url %}
+                    <img src="{{ settings.customer_portal.custom_code.header_logo_url }}" alt="theme logo">
+                {% else %}
+                    <h2 id="novum-logo">{{ store.name }}</h2>
+                {% endif %}
+            </a>
+            <a id="rc_account_logout">
+                {{ 'cp_logout' | t }}
+            </a>
+        </header>
+    {% endif %}
+
+    {% include '_navbar.html' %}
+
+    <div class="rc_page-width" id="rc_te-template-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include '_modal.html' %}
+    {% include '_preview_info.html' %}
+</div>
+
+<script>
+    {% include '_navbar.js' %}
+</script>
+
+<script>
+    {% include '_billing.js' %}
+</script>
+<script>
+    {% include '_orders.js' %}
+</script>
+<script>
+    {% include '_edit-subscription.js' %}
+</script>
+<script>
+    {% include '_recharge.js' %}
+</script>
+
+{% if settings.customer_portal.custom_code.footer %}
+    {{ settings.customer_portal.custom_code.footer | safe }}
+{% endif %}

@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section id="js-rc_schedule_container">
+  <h3>{{ 'Delivery_Schedule' | t }} </h3>
+</section>
+
+{% if schedule %}
+    <script>
+        (function() {
+            const schedule = {{ schedule | json }};
+            ReCharge.Novum.schedule = schedule;
+            const addresses = {{ addresses | json }};
+            ReCharge.Novum.addresses = addresses;
+            // Group orders by same address
+            const newSchedule = [];
+            const onetimes = [];
+
+            schedule.map(delivery => {
+                const dateAddresses = [];
+                addresses.map(address => {
+                    const newAddress = { ...address };
+
+                    const addressSubscriptions = delivery.orders.filter(
+                        order => order.subscription.address_id == address.id && order.subscription.status != "ONETIME"
+                            ? order
+                            : ''
+                    );
+
+                    const addressOnetimes = delivery.orders.filter(order => {
+                        if (
+                            order.subscription.address_id == address.id &&
+                            order.subscription.status == "ONETIME"
+                        ) {
+                            onetimes.push(order.subscription);
+                            return order;
+                        }
+                    });
+
+                    if (
+                        Array.isArray(addressSubscriptions) && addressSubscriptions.length ||
+                        Array.isArray(addressOnetimes) && addressOnetimes.length
+                        )   {
+                                newAddress.subscriptions = addressSubscriptions;
+                                newAddress.onetimes = addressOnetimes;
+                                dateAddresses.push(newAddress);
+                            }
+                });
+
+                newSchedule.push({ date: delivery.date, dateAddresses });
+            });
+
+            ReCharge.Novum.onetimes = onetimes;
+
+            const container = document.querySelector("#js-rc_schedule_container");
+
+            // Render schedule
+            newSchedule.map(delivery => {
+                const newDate = new Date(delivery.date);
+                const month = newDate.toLocaleString('default', { month: 'long' });
+                const translatedMonth = ReCharge.Novum.Utils.translateMonth(month);
+
+                container.innerHTML += `
+                    <h2>
+                        ${translatedMonth}
+                        ${newDate.getDate()}
+                    </h2>
+                `;
+
+                delivery.dateAddresses.map(address => {
+                const { address1, city, province, zip } = address;
+                let subscriptionOutput, onetimeOutput;
+
+                if( address.onetimes && address.onetimes.length) {
+                    onetimeOutput = address.onetimes.map(order => {
+                        const { subscription, title, is_skipped } = order;
+                        const { variant_title, quantity, price, id, product, shopify_variant_id, shopify_product_id, properties } = subscription;
+                        const actionUrl = `{{ shopify_proxy_url if proxy_redirect else '' }}/portal/{{ customer.hash }}/subscriptions/${id}?token=${getToken()}&${sessionStorage.getItem("rc_preview_param")}`;
+
+                        let otpTitleButton, isAddOn;
+
+                        if (properties && properties.length) {
+                            isAddOn = properties.filter(prop => prop.name == "add_on")[0];
+                            otpTitleButton = isAddOn ? `{{ 'cp_manage_add_on' | t }}` : `{{ 'cp_manage_onetime' | t }}`;
+                        } else {
+                            otpTitleButton = `{{ 'cp_manage_onetime' | t }}`;
+                        }                        
+
+                        return `
+                            <div class="rc_schedule_container">
+                                <div class="rc_order_info_container">
+                                    <div class="rc_photo_container">
+                                    <img 
+                                        src=" ${ReCharge.Novum.Utils.getImageUrl(product, shopify_variant_id)}"
+                                        alt="${order.title.replace('Auto renew', '')}">
+                                    </div>
+
+                                    <div class="rc_schedule_wrapper">
+                                    <div class="rc_order_title_container">
+                                        <span class="rc_order_title">${title.replace('Auto renew', '')}</span>
+                                        ${ !is_skipped ? ''  :
+                                            `<p class="expired-icon">
+                                                {{ 'Skipped' | t }}
+                                            </p>`
+                                        }
+                                    </div>
+
+                                    <p>
+                                        {% include '_onetime-icon.svg' %}
+                                        {{ 'one_time' | t }}
+                                    </p>
+
+                                    ${!variant_title ? '':
+                                        `<p>${variant_title}</p>`
+                                    }
+
+                                    <p>
+                                        {{ 'Quantity' | t }}: ${quantity}
+                                    </p>
+
+                                    <p class="text-font-14">
+                                        ${ReCharge.Novum.Utils.getCurrency()}${Number(price).toFixed(2)}
+                                    </p>
+                                    </div>
+                                </div>
+
+                                <!-- Action buttons -->
+                                <div>
+                                    <a
+                                        href="${actionUrl}"
+                                        class="rc_btn--secondary rc_btn--secondary--color text-uppercase title-bold text-center"
+                                    >
+                                        ${otpTitleButton}
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        }).join("");
+                } else {
+                    onetimeOutput = "";
+                }
+
+                subscriptionOutput = address.subscriptions.map(order => {
+                    const { subscription, charge, title, is_skipped, is_skippable } = order;
+                    const { variant_title, quantity, price, id, next_charge_scheduled_at, order_interval_unit, charge_interval_frequency , order_interval_frequency, product, shopify_variant_id, shopify_product_id, address_id } = subscription;
+                    const actionUrl = `{{ shopify_proxy_url if proxy_redirect else '' }}/portal/{{ customer.hash }}/subscriptions/${id}?token=${getToken()}&${sessionStorage.getItem("rc_preview_param")}`;
+
+                    return `
+                        <div class="rc_schedule_container margin-bottom-0">
+                            <div class="rc_order_info_container">
+                                <div class="rc_photo_container">
+                                    <img src=" ${ReCharge.Novum.Utils.getImageUrl(product, shopify_variant_id)}"
+                                        alt="${title.replace('Auto renew', '')}">
+                                </div>
+
+                                <div class="rc_schedule_wrapper">
+                                    <div class="rc_order_title_container">
+                                    <span class="rc_order_title">${title.replace('Auto renew', '')}</span>
+                                    ${ !is_skipped ? ''  :
+                                        `<p class="expired-icon">
+                                            {{ 'Skipped' | t }}
+                                        </p>`
+                                    }
+                                    </div>
+
+                                    <p>
+                                    {% include '_subscription-icon.svg' %}
+                                    {{ 'recurring' | t }}
+                                    </p>
+
+                                    ${!variant_title ? '':
+                                    `<p>${variant_title}</p>`
+                                    }
+
+                                    <p>
+                                        {{ 'Quantity' | t }}: ${quantity}
+                                    </p>
+
+                                    <p class="text-font-14">
+                                        ${ReCharge.Novum.Utils.getCurrency()}${Number(price).toFixed(2)}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Action buttons -->
+                            <div>
+                                ${charge_interval_frequency != order_interval_frequency
+                                    ? ` <button class="expired rc_btn--secondary rc_btn--secondary--color text-uppercase title-bold text-center" disabled style="pointer-events: none;">{{ 'pre_paid' | t }}</button>`
+                                    :   `
+                                            <a href="${actionUrl}" class="rc_btn--secondary rc_btn--secondary--color text-uppercase title-bold text-center">
+                                                {{ 'Edit' | t }}
+                                            </a>
+                                        `
+                                }
+                                ${is_skipped
+                                    ?
+                                        `<button
+                                            type="submit"
+                                            class="rc_btn--secondary rc_btn--secondary--color js-unskip-btn text-uppercase width-100 title-bold text-center js-unskip-handler"
+                                            style="display: none;"
+                                            data-id="${id}"
+                                            ${!charge ? "" :
+                                            `data-charge-id="${charge.id}"`
+                                            }
+                                            data-date="${delivery.date}"
+                                            data-current-date="${month} ${newDate.getDate()}"
+                                            data-unit="${order_interval_unit}"
+                                            data-frequency="${order_interval_frequency}"
+                                            data-type="unskip"
+                                            data-charge-date="${order.charge.scheduled_at}"
+                                        >
+                                            {{ 'unskip' | t }}
+                                        </button>`
+                                    : !is_skippable ? '' :
+                                        `<button
+                                            type="button"
+                                            class="rc_btn--secondary rc_btn--secondary--color js-skip-btn text-uppercase width-100 title-bold text-center js-skip-handler"
+                                            style="display: none;"
+                                            data-id="${id}"
+                                            ${charge && charge.id ?
+                                            `data-charge-id="${charge.id}"`
+                                            :
+                                            `data-future-charge`
+                                            }
+                                            data-date="${delivery.date}"
+                                            data-current-date="${month} ${newDate.getDate()}"
+                                            data-unit="${order_interval_unit}"
+                                            data-frequency="${order_interval_frequency}"
+                                            data-type="skip"
+                                            data-address-id="${address_id}"
+                                        >
+                                            {{ 'Skip' | t }}
+                                        </button> `
+                                }
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML += `
+                    <h3 class="custom-font font-normal title-bold primary-font-size line-height-12 d-flex align-items-center letter-spacing text-uppercase color-dark-green">
+                        ${address1}, ${city}, ${province ? `${province},` : ''} ${zip}
+                    </h3>
+                    <div class="scheduled-order">
+                        ${subscriptionOutput}
+
+                        ${address.subscriptions && address.subscriptions.length &&
+                            address.onetimes && address.onetimes.length
+                            ? `<div class="order-divider"> </div>`
+                            : ''
+                        }
+
+                        ${ address.onetimes && address.onetimes.length
+                            ? `<div>${onetimeOutput}</div>`
+                            : ""
+                        }
+                    </div>
+                `;
+                });
+            });
+        })();
+    </script>
+{% else %}
+    <div>{{ 'No_Upcoming_Deliveries' | t }}</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="grid__item medium-up--one-full">
+    {% if page is defined and page == 'billing_page' %}
+        <h3>{{ 'cp_billing_header' | t }}</h3>
+    {% endif %}
+    <div class="rc-card mb-5 cursor-pointer rc_subscription_container">
+        <div>
+            <p class="margin-bottom-20 color-dark-green title-bold font-spacing text-uppercase">
+                {{ 'cp_billing_and_payment_information' | t }}
+            </p>
+            <p>{{ 'cp_securely_update_payment_and_biling_info' | t }}</p>
+        </div>
+        <div>
+            <button
+                type="button"
+                class="rc_btn--secondary rc_btn--secondary--color text-uppercase width-100 title-bold text-center"
+                onclick="sendEmailRequest(event)"
+            >
+                {{ 'cp_send_email_to_update' | t }}
+            </button>
+        </div>
+    </div>
+</div>

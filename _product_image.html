@@ -1,0 +1,32 @@
+{% set image_size = image_size or '100x100' %}
+
+{% if store.external_platform in ['shopify', 'big_commerce'] %}
+    {% if subscription.product and subscription.product.shopify_details.images %}
+        {% set shopify_details = subscription.product.shopify_details %}
+        {% if shopify_details.variants | length > 1 and shopify_details.images | length > 1 %}
+            {% for variant in shopify_details.variants %}
+                {% if variant.shopify_id == subscription.shopify_variant_id  or variant.shopify_id == subscription.external_variant_id %}
+                    {% set chosen_variant = variant  %}
+                    {% for image in shopify_details.images %}
+                        {% if image.shopify_id == chosen_variant.shopify_image_id %}
+                            <img src="{{ image.src | img_url(image_size) }}" alt="{{ subscription.product_title | replace('Auto renew', '') }}">
+                            {% break %}
+                        {% elif loop.index == loop.length %}
+                            <img src="{{ shopify_details.image.src | img_url(image_size) }}" alt="{{ subscription.product_title | replace('Auto renew', '') }}">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <img src="{{ shopify_details.images[0].src | img_url(image_size) }}" alt="{{ subscription.product_title | replace('Auto renew', '') }}">
+        {% endif %}
+    {% else %}
+        <img src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" width="100px" height="100px">
+    {% endif %}
+{% else %}
+    {% if subscription.product and subscription.product.images and subscription.product.images[0].large %}
+        <img src="{{ subscription.product.images[0].large | img_url(image_size) }}" alt="{{ subscription.product_title | replace('Auto renew', '') }}">
+    {% else %}
+        <img src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" width="100px" height="100px">
+    {% endif %}
+{% endif %}

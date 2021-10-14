@@ -1,0 +1,56 @@
+<div class="rc-card mb-5 cursor-pointer rc_card_container js-edit-billing-card" onclick="renderPaymentMethod(event);">
+    <div>
+        {% if payment_source.payment_type == 'credit' %}
+            <p class="text-uppercase color-dark-green title-bold font-spacing">{{ 'Card_on_file' | t }}</p>
+            <div class="rc_card_container">
+                <div>
+                {% if payment_source.status == 'failed' %}
+                    <p> {{ 'no_customer_card' | t }} </p>
+                {% else %}
+                    {% if not payment_source.card_brand %}
+                        <p> {{ 'card_details_unavailable' | t }} </p>
+                    {% else %}
+                        <p>{{ payment_source.card_brand | capitalize | replace('_', ' ') }} {{ 'Ending_In' | t }} {{ payment_source.card_last4 }}</p>
+                        <p> {{ 'Expires' | t }} {{ payment_source.card_exp_month }}/{{ payment_source.card_exp_year }} </p>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        {% elif payment_source.payment_type in ['sepa_debit', 'ideal'] %}
+            <p class="color-dark-green title-bold font-spacing margin-bottom-20 text-uppercase">{{ 'payment_method' | t }}</p>
+            <div class="rc_card_container">
+                <p>{{ 'sepa_direct_debit' | t }} {{ 'Ending_In' | t }} {{ payment_source.card_last4 }}</p>
+            </div>
+        {% elif payment_source.payment_type == 'paypal' %}
+            <p class="text-uppercase" style="color: #00484F; font-weight: bold; margin-bottom: 20px; letter-spacing: 0.09em;">{{ 'cp_paypal_account' | t}}</p>
+            <div class="rc_card_container">
+                <div>
+                    <p>{{ 'paypal_instructions' | t }}</p>
+                    <p><a href="https://www.paypal.com/signin" target="_blank" rel="noopener noreferrer">{{ 'cp_paypal_sign_in' | t }}</a>.</p>
+                </div>
+            </div>
+        {% elif payment_source.payment_type == 'apple_pay' %}
+            <p class="color-dark-green title-bold font-spacing margin-bottom-20 text-uppercase">{{ 'cp_linked_apple_pay' | t }}</p>
+            <div class="rc_card_container">
+                <div>
+                    <p>{{ 'apple_pay_instructions' | t }}</p>
+                    <p><a href="https://support.apple.com/en-us/HT205583" target="_blank" rel="noopener noreferrer">{{ 'cp_learn_more_about_apple_pay' | t }}</a>.</p>
+                </div>
+            </div>
+        {% else %}
+            <p class="color-dark-green title-bold font-spacing margin-bottom-20 text-uppercase">{{ 'cp_payment_processor' | t }}</p>
+            <div class="rc_card_container">
+                <div>
+                    <p>{{ 'cp_payment_processor_unidentified' | t }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if payment_source.payment_type not in ['credit', 'debit'] %}
+            <div>
+                <p>{{'cp_credit_card_reset_payment_type' | t}} {{ payment_source.payment_type | replace('_', ' ') | capitalize }}.</p>
+            </div>
+        {% endif %}
+    </div>
+    <span class="js-billing-card-edit-btn"><i class="fas fa-chevron-right"></i></span>
+</div>

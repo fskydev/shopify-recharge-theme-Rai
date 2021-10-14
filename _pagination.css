@@ -1,0 +1,45 @@
+body#recharge-novum #recharge-te .rct_pagination__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body#recharge-novum #recharge-te .rct_pagination__prev,
+body#recharge-novum #recharge-te .rct_pagination__next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+body#recharge-novum #recharge-te .rct_pagination__prev:hover,
+body#recharge-novum #recharge-te .rct_pagination__next:hover {
+    cursor: pointer;
+}
+
+body#recharge-novum #recharge-te .rct_pagination__page {
+    margin: 0 6px;
+    padding: 8px;
+}
+
+body#recharge-novum #recharge-te .rct_pagination__page--current {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0px 10px;
+}
+
+body#recharge-novum #recharge-te .rct_pagination__container--hidden {
+    display: none;
+}
+
+body#recharge-novum #recharge-te .rct_pagination__prev--disabled,
+body#recharge-novum #recharge-te .rct_pagination__next--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

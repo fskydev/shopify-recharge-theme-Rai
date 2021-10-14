@@ -1,0 +1,24 @@
+<div id="info-modal-underlay" class="info-modal" style="display: none"></div>
+<div id="info-modal" class="info-modal" style="display: none">
+    <div id="info-modal-header">
+        <h3>{{ 'cp_warning_real_customer_data_modal' | t }}</h3>
+        <span id="info-modal-close-btn"><i class="fas fa-times"></i></span>
+    </div>
+    <div id="info-modal-content">
+        <i class="fas fa-exclamation-triangle margin-right-10 color-orange"></i>
+        <span>{{ 'cp_preview_real_customer_data' | t }} </span
+        >
+    </div>
+    <div id="info-modal-footer" onclick="ReCharge.Novum.Utils.informCustomerHandler(event)">
+        <button
+            type="button"
+            class="rc_info_cancel-btn rc_info-btn"
+            value="cancel"
+        >
+            {{ 'cp_cancel_preview_modal_button' | t }}
+        </button>
+        <button type="button" class="rc_info_agree-btn rc_info-btn" value="ok">
+            {{ 'cp_i_understand_button' | t }}
+        </button>
+    </div>
+</div>

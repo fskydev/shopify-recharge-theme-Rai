@@ -1,0 +1,24 @@
+{% set order_interval_unit = order_interval_unit | downcase %}
+{% set freq = frequency | int %}
+
+{% if 'day' in order_interval_unit %}
+    {% if freq == 1 %}
+        {{ 'Day' | t | downcase  }}
+    {% else %}
+        {{ 'Days' | t | downcase  }}
+    {% endif %}
+{% elif 'week' in order_interval_unit %}
+    {% if freq == 1 %}
+        {{ 'Week' | t | downcase  }}
+    {% else %}
+        {{ 'Weeks' | t | downcase  }}
+    {% endif %}
+{% elif 'month' in order_interval_unit %}
+    {% if freq == 1 %}
+        {{ 'Month' | t | downcase  }}
+    {% else %}
+        {{ 'Months' | t | downcase  }}
+    {% endif %}
+{% else %}
+   {{ order_interval_unit }}
+{% endif %}

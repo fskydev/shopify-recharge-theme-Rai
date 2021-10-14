@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3> {{ 'Purchase_History' | t }} </h3>
+
+{% if orders %}
+    {% for order in orders | sort(attribute='shopify_order_number', reverse=true) %}
+        <div
+            class="rc_card_container rc-card mb-5 cursor-pointer"
+            id="order-{{order.id}}"
+            data-id="{{ order.id }}"
+            onclick="renderOrderDetails(event)"
+        >
+            <div>
+                <p class="text-font-14"> {{ 'Order' | t }} #{{ order.shopify_order_number }} </p>
+
+                <p
+                    class="order-date-mobile text-font-14"
+                    data-processed-at="{{ order.processed_at }}"
+                    data-local-date
+                >
+                    {{ order.processed_at | date('%b %-d, %Y') }}
+                </p>
+            </div>
+
+            <p
+                class="order-date-desktop text-font-14"
+                data-processed-at="{{ order.processed_at }}"
+                data-local-date
+            >
+                {{ order.processed_at | date('%b %-d, %Y') }}
+            </p>
+
+            <p class="text-font-14">
+                <span class="margin-right-10"> {{ order.total_price | money_localized }} </span>
+                <i class="fas fa-angle-right"></i>
+            </p>
+        </div>
+    {% endfor %}
+{% else %}
+    <div> {{ 'cp_no_orders' | t }} </div>
+{% endif %}
+
+<script>
+    (function() {
+        ReCharge.Novum.orders = {{ orders | json }};
+        let dateElements = document.querySelectorAll('[data-local-date]');
+
+        dateElements.forEach(dateEl => {
+            let localDate = dateEl.dataset.processedAt;
+            localDate = ReCharge.Novum.Utils.getLocalDate(localDate);
+            const translatedDate = ReCharge.Novum.Utils.translateMonth(localDate);
+            
+            dateEl.innerHTML = translatedDate;
+        });
+    })();
+</script>
+
+{% endblock %}

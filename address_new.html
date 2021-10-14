@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>Add new address</h3>
+
+  <form action="{{ address_list_url }}" method="post" id="ReChargeForm_address">
+    <input type="hidden" name="redirect_url" value="{{ address_list_url }}">
+    <fieldset>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="first_name">First name</label>
+          <input type="text" name="first_name" id="first_name">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="last_name">Last name</label>
+          <input type="text" name="last_name" id="last_name">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="address1">Address 1</label>
+          <input type="text" name="address1" id="address1">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="address2">Address 2</label>
+          <input type="text" name="address2" id="address2">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="company">Company</label>
+          <input type="text" name="company" id="company">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="city">City</label>
+          <input type="text" name="city" id="city">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="country">Country</label>
+          <select name="country" id="country" onchange="ReCharge.Forms.updateProvinces(this);">
+              {% for country in shipping_countries %}
+                  <option value="{{ country.name }}">{{ country.name }}</option>
+              {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="zip">Zip/postal code</label>
+          <input type="text" name="zip" id="zip">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="province">State/province</label>
+          <input type="text" name="province" id="province">
+          <select id="province_selector" onchange="ReCharge.Forms.updateProvinceInput(this);" style="display: none;"></select>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="phone">Phone</label>
+          <input type="text" name="phone" id="phone">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="cart_note">Cart note</label>
+          <input type="text" name="cart_note" id="cart_note">
+        </div>
+      </div>
+    </fieldset>
+    <br>
+    <p>
+      <button type="submit" class="btn">Add address</button>
+      <a href="{{ address_list_url }}">Cancel</a>
+    </p>
+  </form>
+  <script>
+    window.Countries = {{ shipping_countries | json }};
+    ReCharge.Forms.buildCountries();
+    ReCharge.Forms.updateProvinces(document.querySelector('#country'));
+  </script>
+{% endblock %}

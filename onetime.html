@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="grid">
+    {% set product = onetime.product %}
+
+    <div class="grid__item medium-up--one-third small--text-center">
+      {% if product and product.shopify_details.images %}
+        <img src="{{ product.shopify_details.images[0].src | img_url }}">
+      {% else %}
+        <img src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/images/no-image.png" width="100">
+      {% endif %}
+    </div>
+
+    <div class="grid__item medium-up--two-thirds small--text-center">
+      <h3>
+        {{ onetime.product_title }}
+        {{ '-' if onetime.variant_title else '' }}
+        {{ onetime.variant_title }}
+      </h3>
+      <h3>{{ onetime.price | money }}</h3>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="grid">
+    <div class="grid__item medium-up--two-thirds">
+
+      <fieldset>
+        <h4>Next recurring order</h4>
+        <p>
+          {% if onetime.next_charge_scheduled_at %}
+            {{ onetime.next_charge_scheduled_at | date('%m/%d/%Y') }}
+            <a href="#" onclick="ReCharge.Helpers.toggle('ReChargeForm_date'); return false;">Edit</a>
+          {% else %}
+            Error
+          {% endif %}
+        </p>
+        <form method="post" action="{{ onetime.id | onetime_set_next_charge_date_url }}" id="ReChargeForm_date" style="display: none;">
+          <p>
+            <label for="date">Date:</label>
+            <input type="date" name="next_charge_scheduled_at" id="date" value="{{ onetime.next_charge_scheduled_at | date('%Y-%m-%d') }}">
+          </p>
+          <p>
+            <button type="submit" class="btn">Update order date</button>
+            <a href="#" onclick="ReCharge.Helpers.toggle('ReChargeForm_date'); return false;" class="btn btn--secondary">Cancel</a>
+          </p>
+        </form>
+      </fieldset>
+
+      <fieldset>
+        <h4>Change quantity</h4>
+        <p>
+          {{ onetime.quantity }}
+          <a href="#" onclick="ReCharge.Helpers.toggle('ReChargeForm_quantity'); return false;">Edit</a>
+        </p>
+        <form method="post" action="{{ onetime.id | onetime_url }}" id="ReChargeForm_quantity" style="display: none;">
+          <p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" value="{{ onetime.quantity }}">
+          </p>
+          <p>
+            <button type="submit" class="btn">Update quantity</button>
+            <a href="#" onclick="ReCharge.Helpers.toggle('ReChargeForm_quantity'); return false;" class="btn btn--secondary">Cancel</a>
+          </p>
+        </form>
+      </fieldset>
+
+      <fieldset>
+        {% if onetime.status == 'ONETIME' %}
+          <a href="#" onclick="confirmCancelProduct({{ onetime.id }})">Cancel product</a>
+        {% endif %}
+      </fieldset>
+    </div>
+    <div class="grid__item medium-up--one-third">
+      <fieldset>
+        <h4>Ships to</h4>
+        <p>
+          {{ onetime.address.address1 }} {{ onetime.address.address2 }}<br>
+          {{ onetime.address.city }} {{ onetime.address.province }} {{ onetime.address.zip }}<br>
+        </p>
+        <a href="{{ onetime.address.id | address_url }}">Edit</a>
+      </fieldset>
+      <br>
+      <fieldset>
+        {% set payment_source = payment_sources[0] %}
+        {% if payment_source.payment_type in ['credit', 'debit'] %}
+          <h4>Card on file</h4>
+          <p>
+            {% if payment_source.status == 'failed' %}
+              Card was removed or expired.
+            {% else %}
+              {% if not payment_source.card_brand %}
+                Card details unavailable
+              {% else %}
+                {{ payment_source.card_brand | capitalize }} ending in {{ payment_source.card_last4 }}
+              {% endif %}
+            {% endif %}
+          </p>
+          <a href="{{ payment_source_url }}">Edit</a>
+        {% elif payment_source.payment_type == 'paypal' %}
+          <h4>Paypal account</h4>
+          <p>Sign in to <a href="https://www.paypal.com/signin" target="_blank" rel="noopener noreferrer">PayPal</a>.</p>
+        {% elif payment_source.payment_type == 'apple_pay' %}
+          <h4>Linked Apple Pay</h4>
+          <p>Learn more about <a href="https://support.apple.com/en-us/HT205583" target="_blank" rel="noopener noreferrer">Apple Pay</a>.</p>
+        {% endif %}
+      </fieldset>
+    </div>
+  </div>
+
+  <script>
+    function confirmCancelProduct(onetimeId) {
+      $.confirm({
+        content: 'Are you sure you want to cancel this product?',
+        buttons: {
+          ok: {
+            action: () => {
+              ReCharge.Onetime.cancel(onetimeId, { redirect_url: ReCharge.Endpoints.base + 'schedule' });
+            }
+          }
+        }
+      });
+      return false;
+    }
+  </script>
+{% endblock %}

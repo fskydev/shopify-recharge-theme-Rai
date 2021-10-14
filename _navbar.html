@@ -1,0 +1,90 @@
+<div class="nav--wrapper bg-light">
+    <div class="list__item list_item_chosen text-uppercase title-bold text-center" data-arrow="down">
+        <span class="chosen-title title-bold">
+            {{ 'Purchase_History_Tab' | t }}
+        </span>
+        <i class="fas fa-chevron-down arrow-down"></i>
+        <i class="fas fa-chevron-up arrow-up" style="display: none"></i>
+    </div>
+    <ul class="nav__list--desktop rc_page-width text-uppercase title-bold rc_card_container">
+        <li class="js-subscriptions-page">
+            <a href="{{ subscription_list_url }}" id="subscriptions-page" class="title-bold">
+                {{ 'Subscriptions_Tab' | t }}
+            </a>
+        </li>
+        {% if settings.customer_portal.view_order_schedule %}
+        <li class="js-schedule-page">
+            <a href="{{ schedule_url }}" id="schedule-page" class="title-bold">{{ 'Delivery_Schedule_Tab' | t }}</a>
+        </li>
+        {% endif %}
+        <li class="js-orders-page">
+            <a href="{{ order_list_url }}" id="orders-page" class="title-bold">{{ 'Purchase_History_Tab' | t }}</a>
+        </li>
+        {% if settings.customer_portal.view_recharge_payment_methods %}
+        <li class="js-addresses-page">
+            <a href="{{ shipping_list_url }}" id="shipping-page" class="title-bold">Shipping</a>
+        </li>
+        <li class="js-payment_methods-page">
+            <a href="{{ payment_methods_url }}" id="payment_methods-page" class="title-bold">Payment Methods</a>
+        </li>
+        {% else %}
+        <li class="js-addresses-page">
+            <a
+                href="{{ address_list_url }}"
+                id="addresses-page"
+                class="title-bold"
+                >{{ 'cp_shipping_addresses_nav' | t }}</a
+            >
+        </li>
+        <li class="js-payment_sources-page">
+            <a
+                href="{{ payment_source_list_url }}"
+                id="payment_sources-page"
+                class="title-bold"
+                >{{ 'Billing_Information_Tab' | t }}</a
+            >
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+<ul class="nav__list--mobile title-bold text-center">
+    <li class="js-subscriptions-page text-uppercase">
+        <a href="{{ subscription_list_url }}" id="subscriptions-page" class="title-bold">
+            {{ 'Subscriptions_Tab' | t }}
+        </a>
+    </li>
+    {% if settings.customer_portal.view_order_schedule %}
+    <li class="js-schedule-page text-uppercase">
+        <a href="{{ schedule_url }}" id="schedule-page" class="title-bold">{{ 'Delivery_Schedule_Tab' | t }}</a>
+    </li>
+    {% endif %}
+    <li class="js-orders-page text-uppercase">
+        <a href="{{ order_list_url }}" id="orders-page" class="title-bold">{{ 'Purchase_History_Tab' | t }}</a>
+    </li>
+    {% if settings.customer_portal.view_recharge_payment_methods %}
+    <li class="js-addresses-page text-uppercase">
+        <a href="{{ shipping_list_url }}" id="shipping-page" class="title-bold">Shipping</a>
+    </li>
+    <li class="js-payment_methods-page text-uppercase">
+        <a href="{{ payment_methods_url }}" id="payment_methods-page" class="title-bold">Payment Methods</a>
+    </li>
+    {% else %}
+    <li class="js-addresses-page text-uppercase">
+        <a
+            href="{{ address_list_url }}"
+            id="addresses-page"
+            class="title-bold"
+            >{{ 'cp_shipping_addresses_nav' | t }}</a
+        >
+    </li>
+    <li class="js-payment_sources-page text-uppercase">
+        <a
+            href="{{ payment_source_list_url }}"
+            id="payment_sources-page"
+            class="title-bold"
+            >{{ 'Billing_Information_Tab' | t }}</a
+        >
+    </li>
+    {% endif %}
+</ul>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Cancel {{ subscription.product_title }}</h3>
+
+    <p>
+        {% for strategy in retention_strategies %}
+            <a href="{{ subscription.id | retention_strategy_url(strategy) }}">{{ strategy.cancellation_reason }}</a><br>
+        {% endfor %}
+    </p>
+
+    <p>
+        <a href="{{ subscription.id | subscription_url }}">Return to subscription</a>
+    </p>
+{% endblock %}

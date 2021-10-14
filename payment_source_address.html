@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>Edit billing address</h3>
+
+  <form action="{{ payment_source.id | payment_source_address_url }}" method="post" id="ReChargeForm_customer">
+    <input type="hidden" name="redirect_url" value="{{ payment_source_list_url }}">
+    <fieldset>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="billing_first_name">First name</label>
+          <input type="text" name="billing_first_name" id="billing_first_name" value="{{ payment_source.billing_address.first_name }}">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="billing_last_name">Last name</label>
+          <input type="text" name="billing_last_name" id="billing_last_name" value="{{ payment_source.billing_address.last_name }}">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="billing_address1">Address 1</label>
+          <input type="text" name="billing_address1" id="billing_address1" value="{{ payment_source.billing_address.address1 }}">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="billing_address2">Address 2</label>
+          <input type="text" name="billing_address2" id="billing_address2" value="{{ payment_source.billing_address.address2 }}">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-full">
+          <label for="billing_company">Company</label>
+          <input type="text" name="billing_company" id="billing_company" value="{{ payment_source.billing_address.company }}">
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="billing_city">City</label>
+          <input type="text" name="billing_city" id="billing_city" value="{{ payment_source.billing_address.city }}">
+        </div>
+        <div class="grid__item medium-up--one-half">
+        <label for="country">Country</label>
+          <select name="billing_country" id="country" data-value="{{ payment_source.billing_address.country }}" onchange="ReCharge.Forms.updateProvinces(this);">
+            {% for country in shipping_countries %}
+              <option value="{{ country.name }}" {% if payment_source.billing_address.country == country.name %}selected{% endif %}>{{ country.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="billing_zip">Zip/postal code</label>
+          <input type="text" name="billing_zip" id="billing_zip" value="{{ payment_source.billing_address.zip }}">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="province">State/province</label>
+          <input type="text" name="billing_province" id="province" value="{{ payment_source.billing_address.province }}">
+          <select id="province_selector" onchange="ReCharge.Forms.updateProvinceInput(this);" style="display: none;"></select>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="billing_phone">Phone</label>
+          <input type="text" name="billing_phone" id="billing_phone" value="{{ payment_source.billing_address.phone }}">
+        </div>
+      </div>
+    </fieldset>
+    <br>
+    <p>
+      <button type="submit" class="btn">Save</button>
+      <a href="{{ payment_source_url }}">Edit card</a>
+    </p>
+  </form>
+  <script>
+    {% if shipping_countries %}
+      window.Countries = {{ shipping_countries | json }};
+      ReCharge.Forms.buildCountries();
+      ReCharge.Forms.updateProvinces(document.querySelector('#country'));
+    {% endif %}
+  </script>
+{% endblock %}

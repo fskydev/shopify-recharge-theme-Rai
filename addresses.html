@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="rc_add_product">
+    <h3>{{ 'cp_shipping_addresses_label' | t }}</h3>
+    {% if not settings['has_shopify_connector'] %}
+        <button
+            class="rc_btn text-uppercase title-bold border-light"
+            onclick="addAddressHandler(event)"
+        >
+            {{ 'cp_add_shipping_address_button' | t }}
+        </button>
+    {% endif %}
+</div>
+<br />
+
+{% if not addresses %}
+    <p>{{ 'cp_no_address_found' | t }}</p>
+{% else %}
+    {% for address in addresses %}
+        {% include '_address_card.html' %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    (() => {
+        ReCharge.Novum.addresses = {{ addresses | json }};
+    })();
+</script>
+
+{% endblock %}

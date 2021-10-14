@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>Customer details</h3>
+  <form action="{{ customer_url }}" method="post" id="ReChargeForm_customer">
+    <fieldset>
+      <h4>Customer</h4>
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="first_name">First name</label>
+          <input type="text" name="first_name" id="first_name" value="{{ customer.first_name | e }}">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="last_name">Last name</label>
+          <input type="text" name="last_name" id="last_name" value="{{ customer.last_name | e }}">
+        </div>
+      </div>
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email" value="{{ customer.email | e }}">
+    </fieldset>
+    <br>
+    <p>
+      <button type="submit" class="btn">Save</button>
+    </p>
+  </form>
+
+{% endblock %}
