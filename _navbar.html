@@ -8,28 +8,28 @@
     </div>
     <ul class="nav__list--desktop rc_page-width text-uppercase title-bold rc_card_container">
         <li class="js-subscriptions-page">
-            <a href="{{ subscription_list_url }}" id="subscriptions-page" class="">
+            <a href="{{ subscription_list_url }}" id="subscriptions-page" class="subscriptions-page">
                 {{ 'Subscriptions_Tab' | t }}
             </a>
         </li>
       	<hr>
         {% if settings.customer_portal.view_order_schedule %}
         <li class="js-schedule-page">
-            <a href="{{ schedule_url }}" id="schedule-page" class="">{{ 'Delivery_Schedule_Tab' | t }}</a>
+            <a href="{{ schedule_url }}" id="schedule-page" class="schedule-page">{{ 'Delivery_Schedule_Tab' | t }}</a>
         </li>
       	<hr>
         {% endif %}
         <li class="js-orders-page">
-            <a href="{{ order_list_url }}" id="orders-page" class="">{{ 'Purchase_History_Tab' | t }}</a>
+            <a href="{{ order_list_url }}" id="orders-page" class="orders-page">{{ 'Purchase_History_Tab' | t }}</a>
         </li>
       	<hr>
         {% if settings.customer_portal.view_recharge_payment_methods %}
         <li class="js-addresses-page">
-            <a href="{{ shipping_list_url }}" id="shipping-page" class="">Shipping</a>
+            <a href="{{ shipping_list_url }}" id="shipping-page" class="shipping-page">Shipping</a>
         </li>
       	<hr>
         <li class="js-payment_methods-page">
-            <a href="{{ payment_methods_url }}" id="payment_methods-page" class="">Payment Methods</a>
+            <a href="{{ payment_methods_url }}" id="payment_methods-page" class="payment_methods-page">Payment Methods</a>
         </li>
       	<hr>
         {% else %}
@@ -37,7 +37,7 @@
             <a
                 href="{{ address_list_url }}"
                 id="addresses-page"
-                class=""
+                class="addresses-page"
                 >{{ 'cp_shipping_addresses_nav' | t }}</a
             >
         </li>
@@ -46,7 +46,7 @@
             <a
                 href="{{ payment_source_list_url }}"
                 id="payment_sources-page"
-                class=""
+                class="payment_sources-page"
                 >{{ 'Billing_Information_Tab' | t }}</a
             >
         </li>
@@ -57,50 +57,63 @@
             <a
                 href="/account"
                 id="my_account-page"
-                class="title-bold"
+                class="title-bold my_account-page"
                 >My Account</a
             >
         </li>
     </ul>
 </div>
-
-<ul class="nav__list--mobile title-bold text-center">
-    <li class="js-subscriptions-page text-uppercase">
-        <a href="{{ subscription_list_url }}" id="subscriptions-page" class="">
-            {{ 'Subscriptions_Tab' | t }}
-        </a>
-    </li>
-    {% if settings.customer_portal.view_order_schedule %}
-    <li class="js-schedule-page text-uppercase">
-        <a href="{{ schedule_url }}" id="schedule-page" class="">{{ 'Delivery_Schedule_Tab' | t }}</a>
-    </li>
-    {% endif %}
-    <li class="js-orders-page text-uppercase">
-        <a href="{{ order_list_url }}" id="orders-page" class="">{{ 'Purchase_History_Tab' | t }}</a>
-    </li>
-    {% if settings.customer_portal.view_recharge_payment_methods %}
-    <li class="js-addresses-page text-uppercase">
-        <a href="{{ shipping_list_url }}" id="shipping-page" class="">Shipping</a>
-    </li>
-    <li class="js-payment_methods-page text-uppercase">
-        <a href="{{ payment_methods_url }}" id="payment_methods-page" class="">Payment Methods</a>
-    </li>
-    {% else %}
-    <li class="js-addresses-page text-uppercase">
-        <a
-            href="{{ address_list_url }}"
-            id="addresses-page"
-            class=""
-            >{{ 'cp_shipping_addresses_nav' | t }}</a
-        >
-    </li>
-    <li class="js-payment_sources-page text-uppercase">
-        <a
-            href="{{ payment_source_list_url }}"
-            id="payment_sources-page"
-            class=""
-            >{{ 'Billing_Information_Tab' | t }}</a
-        >
-    </li>
-    {% endif %}
-</ul>
+<div class="nav__slider--mobile">
+  <ul class="nav__list--mobile title-bold text-center">
+      <li class="js-subscriptions-page text-uppercase">
+          <a href="{{ subscription_list_url }}" id="subscriptions-page" class="subscriptions-page">
+              {{ 'Subscriptions_Tab' | t }}
+          </a>
+      </li>
+      {% if settings.customer_portal.view_order_schedule %}
+      <li class="js-schedule-page text-uppercase">
+          <a href="{{ schedule_url }}" id="schedule-page" class="schedule-page">{{ 'Delivery_Schedule_Tab' | t }}</a>
+      </li>
+      {% endif %}
+      <li class="js-orders-page text-uppercase">
+          <a href="{{ order_list_url }}" id="orders-page" class="orders-page">{{ 'Purchase_History_Tab' | t }}</a>
+      </li>
+      {% if settings.customer_portal.view_recharge_payment_methods %}
+      <li class="js-addresses-page text-uppercase">
+          <a href="{{ shipping_list_url }}" id="shipping-page" class="shipping-page">Shipping</a>
+      </li>
+      <li class="js-payment_methods-page text-uppercase">
+          <a href="{{ payment_methods_url }}" id="payment_methods-page" class="payment_methods-page">Payment Methods</a>
+      </li>
+      {% else %}
+      <li class="js-addresses-page text-uppercase">
+          <a
+              href="{{ address_list_url }}"
+              id="addresses-page"
+              class="addresses-page"
+              >{{ 'cp_shipping_addresses_nav' | t }}</a
+          >
+      </li>
+      <li class="js-payment_sources-page text-uppercase">
+          <a
+              href="{{ payment_source_list_url }}"
+              id="payment_sources-page"
+              class="payment_sources-page"
+              >{{ 'Billing_Information_Tab' | t }}</a
+          >
+      </li>
+      {% endif %}
+      <li class="js-my_account-page">
+            <a
+                href="/account"
+                id="my_account-page"
+                class="title-bold my_account-page"
+                >My Account</a
+            >
+        </li>
+  </ul>
+  <div class="slider_pagination">
+    <button class="slider_pagination_btn slider_pagination_btn--sel" data-index="0"></button>
+    <button class="slider_pagination_btn" data-index="1"></button>
+  </div>
+</div>

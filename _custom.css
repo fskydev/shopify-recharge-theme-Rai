@@ -21,6 +21,7 @@ body#recharge-novum #recharge-te {
 @media (max-width: 991px) {
   body#recharge-novum #recharge-te {
 	flex-direction: column;
+    margin: 30px 0px 0px;
   }
 }
 body#recharge-novum #recharge-te * {
@@ -31,8 +32,25 @@ body#recharge-novum #recharge-te .rc_page-width {
   width: 100%;
 }
 
+@media (max-width: 991px) {
+  body#recharge-novum #recharge-te .rc_page-width {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 #recharge-novum .rc-card {
   margin: 2px !important;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper {
+  flex: 3;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #fde8c4;  
+  border-radius: 5px;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper > .grid__item {
+  margin-bottom: 20px;
 }
 body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_btn, body#recharge-novum #recharge-te .rc_btn,
 body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_btn--secondary,
@@ -117,19 +135,22 @@ body#recharge-novum #recharge-te .rcc_menu-nav-desktop .nav__list--desktop li a 
 body#recharge-novum #recharge-te .rcc_menu-nav-desktop .nav__list--desktop li:hover a {
   font-weight: 600;
 }
-body#recharge-novum #recharge-te #rc_te-template-wrapper {
-  flex: 3;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: #fde8c4;  
-  border-radius: 5px;
-}
+
 /* - mobile - */
+/* ** */
 @media (max-width: 991px) {
   body#recharge-novum #recharge-te .list_item_chosen {
-      display: block;
+      display: none;
   }
+  /*
   body#recharge-novum #recharge-te .nav__list--mobile.menu--active {
+      display: block !important;
+  }
+  */
+  body#recharge-novum #recharge-te .rcc_menu-nav-desktop {
+    display: none;
+  }
+  body#recharge-novum #recharge-te .nav__list--mobile {
       display: block !important;
   }
 }
@@ -139,4 +160,106 @@ body#recharge-novum #recharge-te #rc_te-template-wrapper {
       display: none !important;
   }
 }
+/* ** */
+body#recharge-novum #recharge-te .nav__slider--mobile {
+  margin-bottom: 30px;
+  position: relative;
+}
+body#recharge-novum #recharge-te .nav__list--mobile {
+  -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 5px;
+  padding: 15px;
+  padding-bottom: 20px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin-bottom: 0px;
+  
+  
+  overflow-x: scroll;
+  -ms-touch-action: auto;
+  touch-action: auto;
+  -ms-overflow-style: none;
+  
+  overflow-y: hidden;
+  
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */
+}
+body#recharge-novum #recharge-te .nav__list--mobile::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
+
+body#recharge-novum #recharge-te .nav__list--mobile li {
+  background: unset;
+  font-size: 16px;
+  display: inline-block;
+  width: 33%;
+  white-space: normal;
+  vertical-align: top;
+  padding: 5px;
+  /* margin-left: 600px; */
+  /* animation: sslide 0s ease 1s forwards;*/
+  /* animation-name: sslide; */
+  animation-duration: 2s;
+  animation-delay: 0.1s;
+  animation-fill-mode: forwards;
+}
+body#recharge-novum #recharge-te .nav__list--mobile li a {
+  color: #161487 !important;
+  text-transform: capitalize;
+  line-height: normal;
+}
+body#recharge-novum #recharge-te .nav__list--mobile li a:hover {
+  font-weight: 600;
+  color: #161487 !important;
+}
+@media (max-width: 991px) {
+  body#recharge-novum #recharge-te .nav__list--mobile li a {
+	font-size: 14px;
+  }
+}
+body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+@media (min-width: 992px) {
+  body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination {
+      display: none;
+  }
+}
+body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination .slider_pagination_btn {
+  display: inline-block;
+  margin: 5px;
+  background-color: #000;
+  opacity: .25;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  width: 6px;
+  height: 6px;
+}
+body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination .slider_pagination_btn:hover,
+body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination .slider_pagination_btn:focus {
+  background-color: #000 !important;
+}
+body#recharge-novum #recharge-te .nav__slider--mobile .slider_pagination .slider_pagination_btn.slider_pagination_btn--sel {
+  opacity: .75;
+}
+
+@keyframes sslide
+{
+from {margin-left: 400px;}
+to {margin-left: 0;}
+}
 /* --- navigation menu end --- */
+
+/* --- billing information begin --- */
+
+/* --- billing information end --- */
