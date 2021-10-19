@@ -7,14 +7,31 @@ async function addProductHandler(evt) {
 
     ReCharge.Novum.sidebarHeading.innerHTML = `{{ 'cp_select_product' | t }}`;
     ReCharge.Novum.sidebarContent.innerHTML = `{% include '_render_products.html' %}`;
-
-    const data =  await ReCharge.Actions.getProducts(6);
+  	
+  	const data =  await ReCharge.Actions.getProductsNotInSubscription(6);
     const productsToRender = data.products;
-
+  	
     ReCharge.Novum.Pagination.currentAddPage = 1;
     ReCharge.Novum.Pagination.limit = 6;
-    ReCharge.Novum.Pagination.type = 'add';    
-    ReCharge.Novum.Helpers.renderProducts(productsToRender, 'add');
+    ReCharge.Novum.Pagination.type = 'add';
+  	
+  	ReCharge.Novum.Helpers.renderProductsNIS(productsToRender, 'add');
+  	
+  	//show pagination bar  	
+  	if (data.productsCount > ReCharge.Novum.Pagination.limit) {
+      document
+        .querySelector(`.rct_pagination__container--${ReCharge.Novum.Pagination.type}`)
+        .classList.remove('rct_pagination__container--hidden');
+      
+      let rctsPaginationPrevAdd = document.getElementsByClassName("rct_pagination__prev--add");
+      if (rctsPaginationPrevAdd.length > 0) {
+        let rctPaginationPrevAdd = rctsPaginationPrevAdd[0];
+        let rctPaginationNextAdd = document.getElementsByClassName("rct_pagination__next--add")[0];
+        
+        rctPaginationPrevAdd.setAttribute("onclick", "ReCharge.Novum.Pagination.previousPageHandlerAdd(event)");
+        rctPaginationNextAdd.setAttribute("onclick", "ReCharge.Novum.Pagination.nextPageHandlerAdd(event)");
+      }
+    }
 
     let input = document.getElementById('rc_search');
     input.addEventListener('keyup', ReCharge.Novum.Helpers.searchProductsHandler);

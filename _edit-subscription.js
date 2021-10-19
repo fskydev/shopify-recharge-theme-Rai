@@ -1046,8 +1046,8 @@ async function updateProductHandler(ev) {
 
 async function swapProductHandler(event, source = "cancellation-flow") {
     event.preventDefault();
-
-    ReCharge.Novum.backBtn.setAttribute("style", "visibility: visible");
+    
+  	ReCharge.Novum.backBtn.setAttribute("style", "visibility: visible");
     // remove event where backBtn would lead to swap search that was placed in function swapProductDetailsHandler
     ReCharge.Novum.backBtn.removeEventListener("click", swapProductHandler, false);
     ReCharge.Novum.backBtn.removeEventListener("click", cancelSubscriptionFlow, false);
@@ -1061,17 +1061,32 @@ async function swapProductHandler(event, source = "cancellation-flow") {
 
     ReCharge.Novum.sidebarHeading.innerHTML = `{{ 'cp_select_product' | t }}`;
     ReCharge.Novum.sidebarContent.innerHTML = `{% include '_render_products.html' %}`;
-
-    const schema = ReCharge.Schemas.products.search('', 6, 1, 'swap_product');
-    const data =  await ReCharge.Actions.getProducts(6, schema);
-    let productsToRender = data.products;
+  	
+  	const data =  await ReCharge.Actions.getProductsNotInSubscription(6, null, 'swap_product');
+    let productsToRender = data.products;  
     productsToRender = ReCharge.Novum.Utils.isPrepaidProduct(productsToRender);
-
+  	
     ReCharge.Novum.Pagination.currentAddPage = 1;
     ReCharge.Novum.Pagination.type = 'add'; 
-    ReCharge.Novum.Helpers.renderProducts(productsToRender, 'swap');
+    ReCharge.Novum.Helpers.renderProductsNIS(productsToRender, 'swap');
     ReCharge.Novum.isSwap = true;
 
+  	//show pagination bar  	
+  	if (data.productsCount > ReCharge.Novum.Pagination.limit) {
+      document
+        .querySelector(`.rct_pagination__container--${ReCharge.Novum.Pagination.type}`)
+        .classList.remove('rct_pagination__container--hidden');
+      
+      let rctsPaginationPrevAdd = document.getElementsByClassName("rct_pagination__prev--add");
+      if (rctsPaginationPrevAdd.length > 0) {
+        let rctPaginationPrevAdd = rctsPaginationPrevAdd[0];
+        let rctPaginationNextAdd = document.getElementsByClassName("rct_pagination__next--add")[0];
+        
+        rctPaginationPrevAdd.setAttribute("onclick", "ReCharge.Novum.Pagination.previousPageHandlerAdd(event)");
+        rctPaginationNextAdd.setAttribute("onclick", "ReCharge.Novum.Pagination.nextPageHandlerAdd(event)");
+      }
+    }
+  
     const input = document.getElementById("rc_search");
     input.setAttribute("placeholder", `{{ 'cp_search_product_to_swap' | t }}`);
     input.addEventListener("keyup", (evt) => ReCharge.Novum.Helpers.searchProductsHandler(evt, 'swap'));

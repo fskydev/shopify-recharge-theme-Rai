@@ -490,19 +490,30 @@ ReCharge.Novum.Helpers = {
                 ? 'add_product'
                 : 'swap_product'
             ;
-            const schema = ReCharge.Schemas.products.search(searchQuery, 6, 1, actionType);
-
-            const data = await ReCharge.Actions.getProducts(6, schema);
+          	
+          	const schema = ReCharge.Schemas.products.search(searchQuery, null, 1, actionType);
+			
+          	const data = await ReCharge.Actions.getProductsNotInSubscription(6, schema);
 
             // Remove OTPs for Swap feature
             let productsToRender = data.products;
             if (action !== 'add') {
                 productsToRender = ReCharge.Novum.Utils.isPrepaidProduct(productsToRender);
             }
-
-            ReCharge.Novum.Helpers.renderProducts(productsToRender, action);
-
-            ReCharge.Novum.Pagination.updatePagination();  
+          	
+          	ReCharge.Novum.Helpers.renderProductsNIS(productsToRender, action);
+          	
+			if (data.productsCount > ReCharge.Novum.Pagination.limit) {
+              document
+                .querySelector(`.rct_pagination__container--add`)
+                .classList.remove('rct_pagination__container--hidden');
+            } else {
+              document
+                .querySelector(`.rct_pagination__container--add`)
+                .classList.add('rct_pagination__container--hidden');
+            }
+            
+            ReCharge.Novum.Pagination.updatePaginationAdd(data.productsCount);
         }
     },
     renderUpsells: async function(products) {
@@ -808,6 +819,49 @@ ReCharge.Novum.Helpers = {
 
         ReCharge.Novum.Pagination.renderInitialPagination();
     },
+    renderProductsNIS: function(products, type = 'add') {
+        const productsContainer = document.querySelector('.rc_product_list_container');
+        productsContainer.innerHTML = '';
+
+        if (!products.length) {
+            return productsContainer.innerHTML = `{{ "cp_no_products_found" | t }}`;
+        }
+
+        products.forEach(product => {
+            const { title, shopify_id } = product.shopify_details;
+
+            productsContainer.innerHTML += `
+                <li class="rc_product_card border-light text-center rc_single_product_card-wrapper" id="product_${shopify_id}">
+                    <div class="rc_image_container">
+                        <img src="${ReCharge.Novum.Utils.getImageUrl(product)}" alt="${product.title}" class="rc_img__sidebar" height="100px" width="100px">
+                    </div>
+
+                    <p class="product-title title-bold text-font-14 ${title.trim().length > 35 ? 'upsell_text--clip' : 'upsell_text--center'}">
+                        ${title}
+                    </p>
+                    ${ReCharge.Novum.Helpers.renderIconAndPrice(product)}
+                    <button
+                        class="rc_btn text-uppercase title-bold view-product-button"
+                        data-product-id="${shopify_id}"
+                    >
+                        {{ 'cp_select_button' | t }}
+                    </button>
+                </li>
+            `;
+        });
+
+        let handler = ReCharge.Novum.Utils.addProductDetailsHandler;
+
+        if (type === 'swap') {
+            handler = swapProductDetailsHandler;
+        }
+
+        document.querySelectorAll('.view-product-button')
+            .forEach(button => {
+                button.addEventListener('click', handler)
+            })
+        ;
+    },
     showElement: function(el) {
         el.setAttribute('style', 'display: inline-block');
     },
@@ -895,7 +949,20 @@ ReCharge.Novum.Helpers = {
                 retention_strategies: []
             };
         }
-    }
+    },
+    fetchSubscriptions: async function() {
+        const schema = ReCharge.Schemas.subscriptions();
+
+        try {
+            const url = `${ReCharge.Endpoints.request_objects()}&schema=${schema}`;
+            const response = await axios(url);
+          	sessionStorage.setItem('rc_subscriptions', JSON.stringify(response.data.subscriptions));
+            return;
+        } catch (error) {
+            console.error(error);
+            return;
+        }
+    },
 }
 
 const vanillaCalendar = {

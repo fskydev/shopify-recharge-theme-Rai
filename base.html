@@ -93,6 +93,8 @@
         if (mainEl) {
             mainEl.setAttribute("class", "");
         }
+      	
+        ReCharge.Novum.Helpers.fetchSubscriptions();
     }
 
     document.addEventListener("DOMContentLoaded", onLoad);

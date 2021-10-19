@@ -258,7 +258,7 @@
         ReCharge.Novum.subscription = {{ subscription | json }};
         ReCharge.Novum.store = {{ store | json }};
         ReCharge.Novum.settings = {{ settings | json }};
-
+		
         document.addEventListener("DOMContentLoaded", async () => {
             ReCharge.Novum.Helpers.fetchChargesOnetimes();
             // Check if store allows subscription cancellation 

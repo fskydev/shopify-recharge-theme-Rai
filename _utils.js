@@ -654,7 +654,21 @@ ReCharge.Novum.Pagination = {
             );
         }
     },
+  	previousPageHandlerAdd: function(ev) {
+        const handlerType = ev.target.closest('[data-handler-type]').dataset.handlerType;      	
+        if (handlerType === 'add') {
+          this.currentAddPage > 1
+            ? this.currentAddPage -= 1
+          : ''
+          ;
+        }
+        this.goToPageHandlerAdd(
+          handlerType,
+          ev
+        );
+    },
     nextPageHandler: function(ev) {
+      console.log(" -------- nextPageHandler called ---");
         const handlerType = ev.target.closest('[data-handler-type]').dataset.handlerType;
         if (this.hasNextMeta(handlerType)) { 
             let url = '';
@@ -671,6 +685,14 @@ ReCharge.Novum.Pagination = {
                 url
             );
         }
+    },
+  	nextPageHandlerAdd: function(ev) {
+        const handlerType = ev.target.closest('[data-handler-type]').dataset.handlerType;      	
+      	this.currentAddPage += 1;
+      	this.goToPageHandlerAdd(
+          handlerType,
+          ev
+        );
     },
     goToPageHandler: async function(handlerType, ev, url) {
         this.disableButtons(handlerType);
@@ -701,6 +723,62 @@ ReCharge.Novum.Pagination = {
 
         this.updateCurrentPageNumber(page, handlerType);
     },
+  	goToPageHandlerAdd: async function(handlerType, ev, requestedActionType = 'add_product') {
+        this.disableButtons(handlerType);
+        this.type = handlerType;
+        
+        let type = 'add';
+        if (ReCharge.Novum.isSwap) {
+          ev.target.closest('[data-handler-type]').dataset.handlerType;
+          type = 'swap';
+        }
+      
+      	//-
+      	const rc_search = document.getElementById("rc_search");
+      	const searchQuery = rc_search.value
+          .trim()
+          .toLowerCase()
+          .replace(/"/g, '')
+        ;
+      	const actionType = type === 'add'
+          ? 'add_product'
+          : 'swap_product'
+        ;
+      	const schema = ReCharge.Schemas.products.search(searchQuery, null, null, actionType);
+      	
+      	let dataUrl = attachQueryParams(`
+            ${ReCharge.Endpoints.request_objects()}&schema=${schema}`
+        );
+      	try {
+          const response = await axios(dataUrl);
+          
+          let subscriptionRechargeIdArr = [];
+          const rc_subscriptions = JSON.parse(sessionStorage.getItem('rc_subscriptions')) || null;
+          if (rc_subscriptions != null ) {
+            for(let subscription of rc_subscriptions) {
+              subscriptionRechargeIdArr.push(subscription.recharge_product_id);
+            }
+          }
+          
+          const productsNotInSubscription = response.data.products.filter(product =>{
+              return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+          });
+          
+          const products =  productsNotInSubscription.slice((this.currentAddPage - 1) * this.limit, this.currentAddPage * this.limit);          
+          ReCharge.Novum.Helpers.renderProductsNIS(products, type);
+        
+          const page = this.currentAddPage;
+          
+          this.updateButtonStateAdd(handlerType, productsNotInSubscription.length);
+          this.updateCurrentPageNumber(page, handlerType);
+          
+        } catch(error) {
+            console.error(error);
+            return [];
+        } finally {
+            delete window.locked;
+        }
+    },
     disableButtons: function(type) {
         document
             .querySelector(`.rct_pagination__prev--${type}`)
@@ -723,6 +801,18 @@ ReCharge.Novum.Pagination = {
         const prevBtnAction = this.hasPrevMeta(type) ? 'remove' : 'add';
         const nextBtnAction = this.hasNextMeta(type) ? 'remove' : 'add';
 
+        document
+            .querySelector(`.rct_pagination__prev--${type}`)
+            .classList[prevBtnAction]('rct_pagination__prev--disabled');
+
+        document
+            .querySelector(`.rct_pagination__next--${type}`)
+            .classList[nextBtnAction]('rct_pagination__next--disabled');
+    },
+  	updateButtonStateAdd(type, productsCount) {
+        const prevBtnAction = this.currentAddPage > 1 ? 'remove' : 'add';      	
+        const nextBtnAction = productsCount > (this.limit * this.currentAddPage) ? 'remove' : 'add';
+      	
         document
             .querySelector(`.rct_pagination__prev--${type}`)
             .classList[prevBtnAction]('rct_pagination__prev--disabled');
@@ -761,6 +851,11 @@ ReCharge.Novum.Pagination = {
         if (!this.hasNextMeta(this.type)) {
            return this.toggle();
         }         
+    },
+  	updatePaginationAdd: function(productsCount) {
+        this.currentAddPage = 1;
+        this.updateButtonStateAdd('add', productsCount);
+        this.updateCurrentPageNumber(this.currentAddPage, 'add');        
     },
     renderInitialPagination: function() {
         let page = this.currentAddPage;

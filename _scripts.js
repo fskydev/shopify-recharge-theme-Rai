@@ -736,7 +736,65 @@ ReCharge.Actions = {
                 ReCharge.Novum.products = [response.data.products];
                 response.data.products = [response.data.products];
             }
+            return response.data;
+        } catch(error) {
+            console.error(error);
+            return [];
+        } finally {
+            delete window.locked;
+        }  
+    },
+  	//added by falcon at 2021-10-18
+  	getProductsNotInSubscription: async function(limit = 6, productsSchema = null, requestedActionType = 'add_product') {
+        const schema = productsSchema || ReCharge.Schemas.products.list(null, requestedActionType);
 
+        let dataUrl = attachQueryParams(`
+            ${ReCharge.Endpoints.request_objects()}&schema=${schema}`
+        );
+
+        ReCharge.Novum.Pagination.limit = limit;
+
+        try {
+            const response = await axios(dataUrl);
+          	
+          	let subscriptionRechargeIdArr = [];
+          
+          	const rc_subscriptions = JSON.parse(sessionStorage.getItem('rc_subscriptions')) || null;
+          	if (rc_subscriptions != null ) {
+            	for(let subscription of rc_subscriptions) {
+                  subscriptionRechargeIdArr.push(subscription.recharge_product_id);
+                }
+            }
+          	
+          	const productsNotInSubscription = response.data.products.filter(product =>{
+              return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+            })
+            
+          	response.data.products = productsNotInSubscription.slice(0, 6);
+            ReCharge.Novum.products = response.data.products;          	
+          	
+            if (
+                response.data.meta &&
+                response.data.meta.products
+            ) {
+                ReCharge.Novum.meta = response.data.meta.products;
+                if (limit === 12) {
+                    ReCharge.Novum.upsellMeta = response.data.meta.products;
+                    ReCharge.Novum.Pagination.limit = 12;
+                } else if (limit === 6) {
+                    ReCharge.Novum.addMeta = response.data.meta.products;
+                    ReCharge.Novum.Pagination.limit = 6;
+                }
+            }
+            if (
+                response.data.products && 
+                !Array.isArray(response.data.products)
+            ) {
+                ReCharge.Novum.products = [response.data.products];
+                response.data.products = [response.data.products];
+            }
+          	
+            response.data.productsCount = productsNotInSubscription.length;
             return response.data;
         } catch(error) {
             console.error(error);
