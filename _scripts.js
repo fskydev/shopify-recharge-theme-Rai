@@ -746,6 +746,21 @@ ReCharge.Actions = {
     },
   	//added by falcon at 2021-10-18
   	getProductsNotInSubscription: async function(limit = 6, productsSchema = null, requestedActionType = 'add_product') {
+      	////
+      	const rcRecommendedSuggestedVitamins = sessionStorage.getItem('rc_recommended_suggested_vitamins') || "";
+      	console.log(" -------- rcRecommendedSuggestedVitamins => ", rcRecommendedSuggestedVitamins);
+      	const recommendedSuggestedProductIds = rcRecommendedSuggestedVitamins.split(',')
+        	.filter(
+              product_id => {
+                return product_id != "undefined" && product_id != "";
+              } 
+          	)
+        	.map(
+              product_id => Number(product_id)
+            );
+        console.log(" -------- recommendedSuggestedProductIds => ", recommendedSuggestedProductIds);
+      	////
+      	
         const schema = productsSchema || ReCharge.Schemas.products.list(null, requestedActionType);
 
         let dataUrl = attachQueryParams(`
@@ -766,8 +781,14 @@ ReCharge.Actions = {
                 }
             }
           	
-          	const productsNotInSubscription = response.data.products.filter(product =>{
-              return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+          	console.log(" ---------- response.data.products => ", response.data.products)
+          
+          	// const productsNotInSubscription = response.data.products.filter(product =>{
+            //   return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+            // })
+            
+            const productsNotInSubscription = response.data.products.filter(product =>{
+              return subscriptionRechargeIdArr.indexOf(product.id) === -1 && recommendedSuggestedProductIds.indexOf(product.shopify_details.variants[0].shopify_id) > -1;
             })
             
           	response.data.products = productsNotInSubscription.slice(0, 6);
@@ -801,7 +822,7 @@ ReCharge.Actions = {
             return [];
         } finally {
             delete window.locked;
-        }  
+        }
     }
 }
 

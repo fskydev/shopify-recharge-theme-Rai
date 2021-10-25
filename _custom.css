@@ -11,12 +11,15 @@
 	top: 51px;
   }
 }
-
+#shopify-section-header {
+  	z-index: 10001;
+}
 body#recharge-novum #recharge-te {
   	display: flex;
     background-color: unset;
   	padding-bottom: 20px;
     margin: 35px;
+  	z-index: 10000;
 }
 @media (max-width: 991px) {
   body#recharge-novum #recharge-te {
@@ -260,6 +263,208 @@ to {margin-left: 0;}
 }
 /* --- navigation menu end --- */
 
-/* --- billing information begin --- */
+/* --- form elements start --- */
+#subscriptionNewForm > label.text-font-14,
+#updateVariantForm > label.text-font-14,
+#subscriptionSwapForm > label.text-font-14{
+  width: 100%;
+  text-align: center;
+}
 
-/* --- billing information end --- */
+body#recharge-novum #recharge-te #subscriptionNewForm .rc_product_quantity,
+body#recharge-novum #recharge-te #updateVariantForm .rc_product_quantity,
+body#recharge-novum #recharge-te #subscriptionSwapForm .rc_product_quantity{
+  margin: auto;
+  margin-top: 8px;
+}
+body#recharge-novum #recharge-te #te-modal-content button#rc_add_product-btn,
+body#recharge-novum #recharge-te #updateVariantForm button[type=submit],
+body#recharge-novum #recharge-te #subscriptionSwapForm button[type=submit]
+{
+  border-radius: 100px;
+}
+/* --- form elements end --- */
+
+/* --- subscriptions begin --- */
+@media (min-width: 320px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product h3 {
+  	white-space: nowrap;
+  }  
+}
+@media (min-width: 768px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product .action-buttons-wrapper {
+    text-align: end;
+  }
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product .action-buttons-wrapper button
+{
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+@media (min-width: 461px) and (max-width: 525px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .rc_add_product .action-buttons-wrapper button {
+    width: 100%;
+  }
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .page-title-wrapper {
+  display: flex;
+  align-items: baseline;
+  padding-bottom: 10px;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .page-title-wrapper h2.page-title {
+  flex: 1;
+}
+@media (max-width: 480px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .page-title-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+body#recharge-novum #recharge-te .rc_btn:hover,
+body#recharge-novum #recharge-te .rc_btn--secondary:hover{
+  background: #252525 !important;
+  color: #ffffff !important;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .warning-text {
+  background-color: #f6dcdd;
+  padding: 20px;
+  color: #b53039 !important;
+  display: inline-block;
+}
+body#recharge-novum #recharge-te #rc_te-template-wrapper .warning-text svg path {
+  color: #b53039 !important;
+}
+/* --- subscriptions end --- */
+
+/* --- manage subscription begin --- */
+#rc_manage_subscription_container .upsells--wrapper {
+  display: none;
+}
+#rc_manage_subscription_container #delivery_container + div {
+  margin-bottom: 20px !important;
+}
+@media (min-width: 768px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper #rc_manage_subscription_container {
+    display: block;
+  }
+}
+/* --- manage subscription end --- */
+
+/* --- schedule begin --- */
+@media (max-width: 767px) {
+  body#recharge-novum #recharge-te #rc_te-template-wrapper .line-height-12 {
+    line-height: 18px;
+  }
+  body#recharge-novum #recharge-te .rc_order_title {
+    line-height: 22px;
+  }
+}
+/* --- schedule end --- */
+
+/* --- _confirm_modal start --- */
+body#recharge-novum #recharge-te #confirm-modal-underlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.5);
+} 
+
+body#recharge-novum #recharge-te #confirm-modal {
+  max-width: 700px;
+  width: 100%;
+  background-color: var(--color-white);
+  position: fixed;
+  top: 50%;
+  z-index: 200;
+  margin: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  font-family: var(--recharge-te-primary-font);
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-header h3 {
+  margin-bottom: 0px;
+  color: var(--info-modal-color-dark);
+  font-size: 20px;
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-header span {
+  font-size: 22px;
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-close-btn {
+  color: var(--info-modal-color-light-gray);
+  cursor: pointer;
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-content {
+  padding: 16px;
+  background: #fce6ce;
+  display: flex;
+  color: var(--info-modal-color-dark);
+  margin-bottom: 16px;
+
+}
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-contact-us {
+  text-align: right;
+  font-size: 12px;
+  padding-top: 20px;
+}
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-contact-us a {
+  text-decoration: underline !important;
+}
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid #B6B6BD;
+  padding-top: 16px;
+}
+
+body#recharge-novum #recharge-te #confirm-modal #confirm-modal-footer .rc_confirm-btn {
+  border-style: solid;
+  height: 36px;
+  line-height: 36px;
+  min-width: 150px;
+  padding: 0 20px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  outline: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  white-space: nowrap;
+  font-weight: 600;
+  background: var(--color-white);
+}
+
+body#recharge-novum #recharge-te #confirm-modal .rc_confirm_agree-btn {
+  background: var(--color-orange) !important;
+  border: 1px solid var(--color-orange);
+  color: var(--color-white);
+  margin-left: 10px;
+}
+
+body#recharge-novum #recharge-te #confirm-modal .rc_confirm_cancel-btn {
+  border: 1px solid var(--info-modal-color-blue);
+  color: var(--info-modal-color-blue);
+}
+
+@media only screen and (min-width: 421px) and (max-width: 767px) {
+  body#recharge-novum #recharge-te #confirm-modal {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
+/* --- _confirm_modal end --- */

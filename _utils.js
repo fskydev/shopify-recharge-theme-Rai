@@ -556,6 +556,84 @@ ReCharge.Novum.Utils = {
                 submitBtn.disabled = true;
             }
         }
+    },
+    createProductCustom: async function(subscriptionNewForm, shopifyId, message = 'create', variants) {
+        // evt.preventDefault();
+
+        let url = subscriptionNewForm.getAttribute('action');
+        url = attachQueryParams(url);
+        const submitBtn = subscriptionNewForm.querySelector('#rc_add_product-btn');
+        const formEntries = new FormData(subscriptionNewForm).entries();
+        const data = Object.assign(
+            ...Array.from(
+                formEntries,
+                ([key, value]) => (
+                    { [key] : value }
+                )
+            )
+        );
+      
+        if (
+            data['purchase_type'] && 
+            data['purchase_type'] === 'onetime'
+        ) {
+            delete data['order_interval_unit'];
+            delete data['charge_interval_frequency'];
+            delete data['order_interval_frequency'];
+        }
+
+        const chosenVariant = variants.find(
+            variant => variant.shopify_id == data["shopify_variant_id"]
+        );
+
+       const isInStock = ReCharge.Novum.Utils.checkInventory(chosenVariant);
+
+        if (!isInStock) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = `{{ 'cp_out_of_stock' | t }}`;
+            ReCharge.Toast.addToast(`{{ 'cp_toast_error' | t }}`, `{{ 'cp_product_out_of_stock' | t }}`);
+        } else {
+            ReCharge.Forms.toggleSubmitButton(submitBtn);
+            try {
+                await axios({
+                    url,
+                    method: "post",
+                    data
+                });
+
+                if (message === 'create') {
+                    ReCharge.Toast.addToast(
+                        `{{ 'cp_toast_success' | t }}`,
+                        `{{ 'cp_product_created_successfully' | t }}`
+                    );
+                } else {
+                    ReCharge.Toast.addToast(
+                        `{{ 'cp_toast_success' | t }}`,
+                        `{{ 'cp_swapped_product_successfully' | t }}`
+                    );
+                }
+
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error(error);
+                if (message === 'create') {
+                    ReCharge.Toast.addToast(
+                        `{{ 'cp_toast_error' | t }}`,
+                        `{{ 'cp_unable_to_create_product' | t }}`
+                    );
+                } else {
+                    ReCharge.Toast.addToast(
+                        `{{ 'cp_toast_error' | t }}`,
+                        `{{ 'cp_unable_to_swap_product' | t }}`
+                    );
+                }
+                submitBtn.disabled = true;
+            }
+        }
     }
 }
 
@@ -724,6 +802,22 @@ ReCharge.Novum.Pagination = {
         this.updateCurrentPageNumber(page, handlerType);
     },
   	goToPageHandlerAdd: async function(handlerType, ev, requestedActionType = 'add_product') {
+      
+      	////
+      	const rcRecommendedSuggestedVitamins = sessionStorage.getItem('rc_recommended_suggested_vitamins') || "";
+      	console.log(" -------- rcRecommendedSuggestedVitamins => ", rcRecommendedSuggestedVitamins);
+      	const recommendedSuggestedProductIds = rcRecommendedSuggestedVitamins.split(',')
+        	.filter(
+              product_id => {
+                return product_id != "undefined" && product_id != "";
+              } 
+          	)
+        	.map(
+              product_id => Number(product_id)
+            );
+        console.log(" -------- recommendedSuggestedProductIds => ", recommendedSuggestedProductIds);
+      	////
+      	
         this.disableButtons(handlerType);
         this.type = handlerType;
         
@@ -760,8 +854,11 @@ ReCharge.Novum.Pagination = {
             }
           }
           
+          // const productsNotInSubscription = response.data.products.filter(product =>{
+              // return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+          // });
           const productsNotInSubscription = response.data.products.filter(product =>{
-              return subscriptionRechargeIdArr.indexOf(product.id) === -1;
+              return subscriptionRechargeIdArr.indexOf(product.id) === -1 && recommendedSuggestedProductIds.indexOf(product.shopify_details.variants[0].shopify_id) > -1;
           });
           
           const products =  productsNotInSubscription.slice((this.currentAddPage - 1) * this.limit, this.currentAddPage * this.limit);          

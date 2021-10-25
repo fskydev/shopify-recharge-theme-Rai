@@ -112,7 +112,7 @@
                                     </p>
 
                                     ${!variant_title ? '':
-                                        `<p>${variant_title}</p>`
+                                        `<p style="display: none;">${variant_title}</p>`
                                     }
 
                                     <p>
@@ -126,6 +126,7 @@
                                 </div>
 
                                 <!-- Action buttons -->
+                                <!--
                                 <div>
                                     <a
                                         href="${actionUrl}"
@@ -134,6 +135,7 @@
                                         ${otpTitleButton}
                                     </a>
                                 </div>
+                                -->
                             </div>
                         `;
                         }).join("");
@@ -170,7 +172,7 @@
                                     </p>
 
                                     ${!variant_title ? '':
-                                    `<p>${variant_title}</p>`
+                                    `<p style="display: none;">${variant_title}</p>`
                                     }
 
                                     <p>
@@ -184,6 +186,7 @@
                             </div>
 
                             <!-- Action buttons -->
+                            <!--
                             <div>
                                 ${charge_interval_frequency != order_interval_frequency
                                     ? ` <button class="expired rc_btn--secondary rc_btn--secondary--color text-uppercase title-bold text-center" disabled style="pointer-events: none;">{{ 'pre_paid' | t }}</button>`
@@ -234,6 +237,7 @@
                                         </button> `
                                 }
                             </div>
+                            -->
                         </div>
                     `;
                 }).join('');

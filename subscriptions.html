@@ -20,18 +20,39 @@
     <h3> {{'Subscriptions' | t }} </h3>
 
     {% if settings.customer_portal.subscription.add_product%}
-        <button
-            class="rc_btn border-light text-uppercase title-bold"
-            onclick="addProductHandler(event);"
-        >
-            {{ 'cp_add_product_label' | t }}
-        </button>
+  		<div class="action-buttons-wrapper">
+          {% if cancelled_expired_subscriptions | length %}
+          <button
+              class="rc_btn border-light text-uppercase title-bold"
+              onclick="resumeSubscriptionsHandler(event);"
+          >
+              Resume Subscriptions
+          </button>
+          {% endif %}
+          {% if active_subscriptions | length %}
+          <button
+              class="rc_btn border-light text-uppercase title-bold"
+              onclick="confirmCancelSubscriptions()"
+              id="rc_btn_cancel-subscriptions"
+          >
+              Cancel Subscriptions
+          </button>
+          {% endif %}
+  		</div>
     {% endif %}
 </div>
 <br>
 
 {% if active_subscriptions | length %}
-    <h2 class="page-title"> {{ 'cp_active_subscriptions' | t }} </h2>
+	<div class="page-title-wrapper">
+      <h2 class="page-title"> {{ 'cp_active_subscriptions' | t }} </h2>
+      <button
+              class="rc_btn border-light text-uppercase title-bold"
+              onclick="addProductHandler(event);"
+              >
+            {{ 'cp_add_product_label' | t }}
+      </button>
+	</div>
     {% for subscription in active_subscriptions | sort(attribute='next_charge_scheduled_at') %}
         <div class="rc_subscription_card_element_wrapper rc_subscription_container">
             <div class="rc_subscription_info_container">
@@ -56,7 +77,7 @@
                     </p>
 
                     {% if subscription.variant_title %}
-                        <p> {{ subscription.variant_title }} </p>
+                        <p style="display: none;"> {{ subscription.variant_title }} </p>
                     {% endif %}
 
                     <p> {{ 'Quantity' | t }}: {{ subscription.quantity }} </p>
@@ -85,12 +106,14 @@
                     {% endif %}
                 </div>
 
+              	<!--
                 <a
                     href="{{ subscription.id | subscription_url }}"
                     class="rc_btn--secondary rc_btn--secondary--color text-uppercase title-bold text-center"
                 >
                     {{ 'Edit' | t }}
                 </a>
+              	-->
             </div>
         </div>
     {% endfor %}
@@ -100,7 +123,17 @@
 
 
 {% if cancelled_expired_subscriptions | length %}
-    <h2 class="page-title"> {{ 'cp_inactive_subscriptions' | t }} </h2>
+	<div class="page-title-wrapper">
+        <h2 class="page-title"> {{ 'cp_inactive_subscriptions' | t }} </h2>
+      	{% if not active_subscriptions | length %}
+          <button
+                  class="rc_btn border-light text-uppercase title-bold"
+                  onclick="addProductHandler(event);"
+                  >
+            {{ 'cp_add_product_label' | t }}
+          </button>	
+      	{% endif %}
+	</div>
     {% for subscription in cancelled_expired_subscriptions %}
         <div class="rc_subscription_card_element_wrapper rc_inactive_subscriptions">
             <div class="rc_subscription_info_container">
@@ -132,6 +165,7 @@
             </div>
 
             {% if settings.customer_portal.subscription.reactivate_subscription%}
+          		<!--
                 <div>
                     <button
                         class="text-uppercase width-100 {{ 'expired' if subscription.status == 'EXPIRED' else 'rc_btn--secondary rc_btn--secondary--color' }}"
@@ -142,9 +176,23 @@
                         {{'Re-activate' | t }}
                     </button>
                 </div>
+				-->
             {% endif %}
         </div>
     {% endfor %}
+{% endif %}
+
+{% set active_subscriptions_count = active_subscriptions | length %}
+
+{% if active_subscriptions | length %}
+	{% if active_subscriptions_count < 3 %}
+      <div style="text-align: center;">
+        <span class="warning-text">
+          <i class='fas fa-exclamation-circle' style="color:#b53039 !important;"></i>
+          Please choose 3 or more vitamins to proceed.
+        </span>
+      </div>
+	{% endif %}
 {% endif %}
 
 <script>

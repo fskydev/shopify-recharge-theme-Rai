@@ -225,6 +225,7 @@
 
     {% include '_modal.html' %}
     {% include '_preview_info.html' %}
+  	{% include '_confirm_modal.html' %}
 </div>
 
 <script>
@@ -242,6 +243,9 @@
 </script>
 <script>
     {% include '_recharge.js' %}
+</script>
+<script>
+    {% include '_custom.js' %}
 </script>
 
 {% if settings.customer_portal.custom_code.footer %}

@@ -1,0 +1,27 @@
+<div id="confirm-modal-underlay" class="confirm-modal" style="display: none"></div>
+<div id="confirm-modal" class="confirm-modal" style="display: none">
+    <div id="confirm-modal-header">
+        <h3>Confirm</h3>
+        <span id="confirm-modal-close-btn" onclick="closeConfirmModal()"><i class="fas fa-times"></i></span>
+    </div>
+    <div id="confirm-modal-content">
+        <span>Would you like to cancel all subscriptions?</span
+        >
+    </div>
+    <div id="confirm-modal-footer">
+        <button
+            type="button"
+            class="rc_confirm_cancel-btn rc_confirm-btn"
+            value="cancel"
+            onclick="closeConfirmModal()"
+        >
+            {{ 'cp_cancel_preview_modal_button' | t }}
+        </button>
+        <button type="button" class="rc_confirm_agree-btn rc_confirm-btn" value="ok" onclick="cancelSubscriptionsHandler()">
+            Confirm
+        </button>
+    </div>
+  	<div id="confirm-modal-contact-us">
+      <a href="/pages/contact-us" target="_blank" style="text-decoration: underline !important;">If you wish to change a single product in your subscription, please contact us.</a>  
+  	</div>
+</div>

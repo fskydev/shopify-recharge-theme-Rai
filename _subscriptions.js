@@ -1,3 +1,17 @@
+function confirmCancelSubscriptions() {
+  console.log(" -------- confirmProceed --- ");
+  
+  document
+    .querySelectorAll(".confirm-modal")
+    .forEach((el) => el.setAttribute("style", "display: block;"));
+  
+}
+function closeConfirmModal() {
+	document
+      .querySelectorAll(".confirm-modal")
+      .forEach((el) => el.setAttribute("style", "display: none;"));
+}
+
 // Open modal to show all products
 async function addProductHandler(evt) {
     evt.preventDefault();
@@ -37,6 +51,79 @@ async function addProductHandler(evt) {
     input.addEventListener('keyup', ReCharge.Novum.Helpers.searchProductsHandler);
 
     ReCharge.Novum.toggleSidebar();
+}
+
+async function resumeSubscriptionsHandler(evt) {
+    evt.preventDefault();
+
+  	//confirmProceed();
+  
+    // Resume subscriptions object
+    let dataToSend = {
+        "subscriptions":[]
+    }    
+    const rc_subscriptions = JSON.parse(sessionStorage.getItem('rc_subscriptions')) || null;
+    if (rc_subscriptions != null ) {
+        let rc_subscriptions_cancelled = rc_subscriptions.filter(s => s.status == "CANCELLED");
+        if (rc_subscriptions_cancelled.length > 0){
+            const addressId = rc_subscriptions_cancelled[0].address_id;
+            console.log(" ------- addressId => ", addressId);
+
+            for(let subscription of rc_subscriptions_cancelled) {
+                dataToSend.subscriptions.push({
+                    "id": subscription.id,
+                    "status": "ACTIVE"
+                });
+            }
+
+            let url = ReCharge.Endpoints.base + 'addresses/' + addressId + '/subscriptions-bulk-update' + '?token=' + window.customerToken;
+            evt.target.innerText = `{{ 'cp_processing_message' | t }}`;
+            evt.target.disabled = true;
+            try {
+                const response = await axios.post(url, dataToSend);
+                ReCharge.Toast.addToast(`{{ 'cp_toast_success' | t }}`, "Activated subscriptions successfully");
+                window.location.href = "{{ subscription_list_url }}";
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+}
+
+async function cancelSubscriptionsHandler() {
+  	closeConfirmModal();
+  	// Cancel subscriptions object
+    let dataToSend = {
+      "subscriptions":[]
+    }
+    const rc_subscriptions = JSON.parse(sessionStorage.getItem('rc_subscriptions')) || null;
+    if (rc_subscriptions != null ) {
+        let rc_subscriptions_active = rc_subscriptions.filter(s => s.status == "ACTIVE");
+        if (rc_subscriptions_active.length > 0){
+            const addressId = rc_subscriptions_active[0].address_id;
+            console.log(" ------- addressId => ", addressId);
+
+            for(let subscription of rc_subscriptions_active) {
+                dataToSend.subscriptions.push({
+                    "id": subscription.id,
+                    "status": "CANCELLED",
+                    "cancellation_reason": "Bulk cancel subscriptions",
+                    "cancellation_reason_comments": "",
+                });
+            }
+            
+            let url = ReCharge.Endpoints.base + 'addresses/' + addressId + '/subscriptions-bulk-update' + '?token=' + window.customerToken;
+            document.getElementById("rc_btn_cancel-subscriptions").innerText = `{{ 'cp_processing_message' | t }}`;
+            document.getElementById("rc_btn_cancel-subscriptions").disabled = true;
+            try {
+                const response = await axios.post(url, dataToSend);
+                ReCharge.Toast.addToast(`{{ 'cp_toast_success' | t }}`, "Cancelled subscriptions successfully");
+                window.location.href = "{{ subscription_list_url }}";
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
 }
 
 // Render product details info to add
@@ -120,7 +207,7 @@ function renderAddProductDetails(product) {
             >
         </div>
         <br>
-        <button type="submit" class="rc_btn text-uppercase title-bold"> {{ 'Add_product' | t }} </button>
+        <button type="button" id="rc_add_product-btn" class="rc_btn text-uppercase title-bold"> {{ 'Add_product' | t }} </button>
     `;
 
     let addressesContainer = document.querySelector('#shipping_address_container');
@@ -158,17 +245,43 @@ function renderAddProductDetails(product) {
     ReCharge.Novum.backBtn.addEventListener('click', addProductHandler);
 
     // Add handler for subscription/otp creation
+	/*
     document
         .querySelector('#subscriptionNewForm')
         .addEventListener(
             'submit',
-            (e) => ReCharge.Novum.Utils.createProduct(
-                e, 
-                product.shopify_details.shopify_id,
-                'create',
-                product.shopify_details.variants
-            )
+            (e) => {
+              console.log("submit add a product");
+              return false;
+            }
         );
+    */
+	document.getElementById("rc_add_product-btn")
+		.addEventListener (
+    		'click',
+      		(e) => {
+                console.log(" -------- rc_add_product-btn clicked! ---");
+                const rc_subscriptions = JSON.parse(sessionStorage.getItem('rc_subscriptions')) || null;
+                if (rc_subscriptions != null ) {
+                  	let rc_subscriptions_active_cnt = rc_subscriptions.filter(s => s.cancelled_at == null).length;
+                  	
+                  	console.log(" ------- rc_subscriptions_active_cnt => ", rc_subscriptions_active_cnt);
+                  	
+                    if(rc_subscriptions_active_cnt >= 9){
+						ReCharge.Toast.addToast(`{{ 'cp_toast_error' | t }}`, "The maximum number of tablets is 9 that can be packed into the sachet. Please remove tablets before you can proceed.");
+                    } else {
+                      	ReCharge.Novum.Utils.createProductCustom(
+                            document.querySelector('#subscriptionNewForm'),
+                            product.shopify_details.shopify_id,
+                            'create',
+                            product.shopify_details.variants
+                        )
+                    }
+
+                }
+              
+            }
+    	)
 }
 
 function reactivateSubscriptionHandler(evt) {

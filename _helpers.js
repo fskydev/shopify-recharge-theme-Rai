@@ -240,7 +240,8 @@ ReCharge.Novum.Helpers = {
         let variantInput = document.querySelector("input[name='shopify_variant_id']");
         const form = variantInput.parentElement;
         const formAction = form.getAttribute('action');
-        const submitBtn = form.querySelector('button[type="submit"]');
+        // const submitBtn = form.querySelector('button[type="submit"]');
+        const submitBtn = form.querySelector('#rc_add_product-btn');
 
           if (newVariant){
             submitBtn.disabled = false;

@@ -88,7 +88,7 @@
                 <div class="ml-5">
                     <h5>{{ subscription.product_title | replace('Auto renew', '') }}</h5>
                     {% if subscription.variant_title %}
-                        <p>{{ subscription.variant_title }}</p>
+                        <p style="display: none;">{{ subscription.variant_title }}</p>
                     {% endif %}
                     <p>{{ 'Quantity' | t }}: {{ subscription.quantity }}</p>
                     <p>{{ subscription.price | money_localized }}</p>
@@ -285,6 +285,8 @@
                 upsellWrapper.innerHTML = ReCharge.Utils.renderNoProductsLayout();
             }
         });
+        let customer = JSON.parse(`{{ customer | json }}`);
+        console.log(" -------- customer => ", customer);
     })();
 
     {% if settings.customer_portal.view_recharge_payment_methods %}
